@@ -1,13 +1,18 @@
 import React from 'react';
 import classes from './Footer.css';
+import {MDBFooter} from 'mdbreact';
 
-const mergeClasses = `page-footer font-small unique-color-dark pt-4 fixed-bottom ${classes.color}`;
-const footer = (props) => (
-    <footer className={mergeClasses}>
-        <div className="footer-copyright text-center py-3">© 2020 Copyright:
-             <a href="https://exchangify.com/"> exchangify.com</a>
-        </div>
-    </footer>
-);
+
+const footer = () =>  {
+    return (
+        <MDBFooter color="unique-color-dark" className="page-footer font-small  fixed-bottom" sticky="button">
+            <div className="footer-copyright text-center py-3">
+                &copy; {new Date().getFullYear()} Copyright: 
+                <a href="https://www.Barter.com"> Barter.com </a>   
+            </div> 
+        </MDBFooter>
+    );    
+}
+
 
 export default footer;
