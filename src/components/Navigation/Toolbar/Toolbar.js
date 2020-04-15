@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, } from 'react-bootstrap';
 import classes from './Toolbar.css';
-import logo from '../../../assets/Images/logo.png';
+import logo from '../../../assets/Images/logo2.png';
 
 const toolbar = (props) => (
    <>
