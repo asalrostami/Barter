@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Layout from './hoc/Layout/Layout';
+import Layout from './components/Layout/Layout';
 import styles from './App.module.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
@@ -9,6 +9,10 @@ class App extends Component{
     pageName: ''
   }
   render() {
+    let isAuthenticated = true;
+    let routs = (
+      {}
+    );
     return (
       <div>
         <Layout />
