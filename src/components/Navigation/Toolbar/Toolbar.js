@@ -44,7 +44,7 @@ class Toolbar extends Component {
                   <MDBNavLink to="#!">About Us</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                  <MDBNavLink to="#!">My Items</MDBNavLink>
+                  <MDBNavLink to="#!">Dashboard</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
                   <MDBNavLink to="#!">LogIn</MDBNavLink>
