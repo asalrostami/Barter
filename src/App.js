@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Layout from './hoc/Layout/Layout';
-import './App.css';
+import styles from './App.module.css';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 
 class App extends Component{
