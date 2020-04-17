@@ -9,6 +9,7 @@ import Auth from './components/Auth/Auth';
 import Dashboard from './components/Dashboard/Dashboard';
 import Desc from './components/Description/Desc';
 import Item from './components/Item/Item';
+import Logout from './components/Auth/Logout/Logout';
 
 class App extends Component{
   state = {
@@ -32,15 +33,17 @@ class App extends Component{
           <Route path="/desc" component={Desc} />
           <Route path="/item" component={Item} />
           <Route path="/about" component={AboutUs} />
-          <Route path="/about" component={AboutUs} />
+          <Route path="/auth" component={Auth} />
+          <Route path="/logout" component={Logout} /> 
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
       </Switch>
       );
     }
+    console.log(`isAuthApp ${isAuthenticated}`);
     return (
       <div>
-        <Layout isAuth={this.isAuthenticated}>
+        <Layout isAuth={isAuthenticated}>
           {routs}
         </Layout>
       </div>

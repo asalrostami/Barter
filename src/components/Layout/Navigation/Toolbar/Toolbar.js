@@ -23,7 +23,9 @@ class Toolbar extends Component {
 
     render(){
     
+      console.log(`isAuthToolbar ${this.props.isAuth}`);
       return(
+        
         <div>
           <header>
               <MDBNavbar color="bg-primary" dark expand="md" fixed="top" scrolling transparent>
@@ -54,10 +56,10 @@ class Toolbar extends Component {
                     : null }
                 {!this.props.isAuth
                     ? <MDBNavItem>
-                         <MDBNavLink to="/auth">Authentication</MDBNavLink>
+                         <MDBNavLink to="/auth">Authenticate</MDBNavLink>
                        </MDBNavItem>
                     :  <MDBNavItem>
-                           <MDBNavLink to="/">Logout</MDBNavLink>
+                           <MDBNavLink to="/logout">Logout</MDBNavLink>
                         </MDBNavItem> }
               </MDBNavbarNav>
               

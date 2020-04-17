@@ -4,16 +4,19 @@ import Toolbar from './Navigation/Toolbar/Toolbar';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
  
-const layout = (props) => (
-    <React.Fragment>
-        <Toolbar isAuth={props.isAuth} />
-        {/* <Header /> */}
-        <main className={classes.Content}>
-            {props.children}
-        </main>
-        <Footer />
-    </React.Fragment>
+const layout = (props) => {
+    console.log(`isAuthLayout ${props.isAuth}`);
+    return(
+        <React.Fragment>
+            <Toolbar isAuth={props.isAuth} />
+            {/* <Header /> */}
+            <main className={classes.Content}>
+                {props.children}
+            </main>
+            <Footer />
+        </React.Fragment>
+        );
 
-)
+    }
 
 export default layout;
