@@ -3,6 +3,12 @@ import Layout from './components/Layout/Layout';
 import styles from './App.module.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
+import Home from './components/Home/Home';
+import AboutUs from './components/AboutUs/AboutUs';
+import Auth from './components/Auth/Auth';
+import Dashboard from './components/Dashboard/Dashboard';
+import Desc from './components/Description/Desc';
+import Item from './components/Item/Item';
 
 class App extends Component{
   state = {
@@ -11,15 +17,36 @@ class App extends Component{
   render() {
     let isAuthenticated = true;
     let routs = (
-      {}
+      <Switch>
+        <Route path="/about" component={AboutUs} />
+        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={Home} />
+        <Redirect to="/" />
+      </Switch>
     );
+
+    if(isAuthenticated) {
+      routs = (
+        <Switch>  
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/desc" component={Desc} />
+          <Route path="/item" component={Item} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/about" component={AboutUs} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
+      </Switch>
+      );
+    }
     return (
       <div>
-        <Layout />
+        <Layout isAuth={this.isAuthenticated}>
+          {routs}
+        </Layout>
       </div>
     );
   }
   
 }
 
-export default App;
+export default withRouter(App);

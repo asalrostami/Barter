@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
  
 const layout = (props) => (
     <React.Fragment>
-        <Toolbar />
+        <Toolbar isAuth={props.isAuth} />
         {/* <Header /> */}
         <main className={classes.Content}>
             {props.children}

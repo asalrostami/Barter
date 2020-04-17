@@ -10,6 +10,7 @@ class Toolbar extends Component {
     this.state = {
       collapse: false,
       isWideEnough: false
+
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -21,6 +22,7 @@ class Toolbar extends Component {
   }
 
     render(){
+    
       return(
         <div>
           <header>
@@ -37,22 +39,26 @@ class Toolbar extends Component {
               {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
               <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapse} navbar>
               <MDBNavbarNav right>
+
                 <MDBNavItem active>
-                  <MDBNavLink to="#!">Home</MDBNavLink>
+                  <MDBNavLink to="/">Home</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                  <MDBNavLink to="#!">About Us</MDBNavLink>
+                  <MDBNavLink to="/about">About Us</MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink to="#!">Dashboard</MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink to="#!">LogIn</MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink to="#!">Logout</MDBNavLink>
-                </MDBNavItem>
-        
+
+                {this.props.isAuth
+                   ? <MDBNavItem>
+                       <MDBNavLink to="/dashboard">Dashboard</MDBNavLink>
+                    </MDBNavItem>
+                    : null }
+                {!this.props.isAuth
+                    ? <MDBNavItem>
+                         <MDBNavLink to="/auth">Authentication</MDBNavLink>
+                       </MDBNavItem>
+                    :  <MDBNavItem>
+                           <MDBNavLink to="/">Logout</MDBNavLink>
+                        </MDBNavItem> }
               </MDBNavbarNav>
               
             </MDBCollapse>
