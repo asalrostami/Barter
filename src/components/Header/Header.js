@@ -1,6 +1,6 @@
 import React from 'react';
-import image from '../../assets/Images/headerImg3.png';
-import classes from './Header.css';
+import image from '../../assets/Images/bg1.png';
+import styles from './Header.module.css';
 import { MDBMask, MDBView, MDBRow, MDBCol } from "mdbreact";
 
 
