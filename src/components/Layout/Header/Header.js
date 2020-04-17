@@ -3,10 +3,9 @@ import image from '../../../assets/Images/bg1.png';
 import styles from './Header.module.css';
 import { MDBMask, MDBView, MDBRow, MDBCol } from "mdbreact";
 
-
 const header = (props) => {
+  
    return (
-     
          <MDBRow>
             <MDBCol md="12" >
             <MDBView>
@@ -15,13 +14,13 @@ const header = (props) => {
                 className="img-fluid"
                 alt=""
               />
-              <MDBMask className="flex-center" overlay="teal-slight">
-                <p className="black-text">Page's Name</p>
+              <MDBMask className="flex-center flex-column text-white text-center" overlay="black-slight">
+                <h2>This is Barter</h2>
+                <h5>It will always be a place that you can barter</h5>    
               </MDBMask>
             </MDBView>
             </MDBCol>
          </MDBRow>
-     
    );
 }
 

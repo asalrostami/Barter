@@ -5,20 +5,12 @@ import image from '../../../../assets/Images/bg1.png';
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBMask, MDBView } from "mdbreact";
 
 class Toolbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapse: false,
-      isWideEnough: false
-
-    };
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    this.setState({
-      collapse: !this.state.collapse
-    });
+  state = {
+    isOpen: false
+  };
+  
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
     render(){
@@ -28,7 +20,7 @@ class Toolbar extends Component {
         
         <div>
           <header>
-              <MDBNavbar color="bg-primary" dark expand="md" fixed="top" scrolling transparent>
+              <MDBNavbar color="black" fixed="top" dark expand="md" >
               <MDBNavbarBrand href="/">
                 <img
                   alt=""
@@ -38,8 +30,8 @@ class Toolbar extends Component {
                   className="d-inline-block align-top"
                 />{' '}
               </MDBNavbarBrand>
-              {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
-              <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapse} navbar>
+              <MDBNavbarToggler onClick={this.toggleCollapse} />
+              <MDBCollapse isOpen={this.state.isOpen} navbar>
               <MDBNavbarNav right>
 
                 <MDBNavItem active>
@@ -61,23 +53,9 @@ class Toolbar extends Component {
                     :  <MDBNavItem>
                            <MDBNavLink to="/logout">Logout</MDBNavLink>
                         </MDBNavItem> }
-              </MDBNavbarNav>
-              
+              </MDBNavbarNav> 
             </MDBCollapse>
             </MDBNavbar>
-            <MDBView className={styles.view}>
-            <img 
-                src={image}
-                className="img-fluid"
-                alt=""
-              />
-              <MDBMask overlay="black-light" className={`text-white text-center ${styles.caption}`}>
-                <h2>This is Barter</h2>
-                <h5>It will always be a place that you can barter</h5>
-                <br />
-                {/* <p>Full page intro with background image will be always displayed in full screen mode, regardless of device </p> */}
-              </MDBMask>
-          </MDBView>
           </header>
         </div>
        
