@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 
-class Desc extends Component  {
+class Images extends Component {
     render(){
-        return(
+        return (
             <div>
-    
+
             </div>
-        )
+        )              
     }
-   
 }
 
-export default Desc;
+export default Images;
