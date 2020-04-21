@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Desc from './components/Description/Desc';
 import Item from './components/Share/Item/Item';
 import Logout from './components/Auth/Logout/Logout';
-import allItems from './api/fakeData/getAllItems.json';
+
 
 class App extends Component{
   state = {
