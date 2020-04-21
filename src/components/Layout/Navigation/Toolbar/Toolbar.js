@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styles from './Toolbar.module.css';
 import logo from '../../../../assets/Images/logo2.png';
-import image from '../../../../assets/Images/bg1.png';
+import image2 from '../../../../assets/Images/1.jpg';
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBMask, MDBView } from "mdbreact";
 
 class Toolbar extends Component {
@@ -41,10 +41,10 @@ class Toolbar extends Component {
                 <MDBCollapse isOpen={this.state.collapse} navbar>
                   <MDBNavbarNav right>
                   <MDBNavItem active>
-                   <MDBNavLink to="/">Home</MDBNavLink>
+                   <MDBNavLink  to="/">Home</MDBNavLink>
                  </MDBNavItem>
-                 <MDBNavItem>
-                   <MDBNavLink to="/about">About Us</MDBNavLink>
+                 <MDBNavItem >
+                   <MDBNavLink  to="/about">About Us</MDBNavLink>
                  </MDBNavItem>
 
                  {this.props.isAuth
@@ -67,8 +67,8 @@ class Toolbar extends Component {
  
           <MDBView>
             <img 
-                src={image}
-                className="img-fluid"
+                src={image2}
+                className={`img-fluid ${styles.size}`}
                 alt=""
               />
             <MDBMask overlay="black-slight" className="flex-center flex-column text-white text-center">

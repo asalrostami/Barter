@@ -20,8 +20,8 @@ class App extends Component{
     let isAuthenticated = true;
     let routs = (
       <Switch>
-        <Route path="/about" component={AboutUs} />
-        <Route path="/auth" component={Auth} />
+        <Route path="/about"  component={AboutUs} />
+        <Route path="/auth"  component={Auth} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />
       </Switch>
