@@ -1,32 +1,44 @@
 [
     {
         "itemId": 1,
-        "name": "itemName1",
-        "location": "location1",
+        "title": "itemName1",
+        "location": {
+            "country": "country1",
+            "city": "city1"
+        },
         "lookingFor": "lookingFor1",
         "offers": 1,
         "imageUrl": "imageUrl1"
     },
     {
         "itemId": 2,
-        "name": "itemName2",
-        "location": "location2",
+        "title": "itemName2",
+        "location": {
+            "country": "country2",
+            "city": "city2"
+        },
         "lookingFor": "lookingFor2",
         "offers": 2,
         "imageUrl": "imageUrl2"
     },
     {
         "itemId": 3,
-        "name": "itemName3",
-        "location": "location3",
+        "title": "itemName3",
+        "location": {
+            "country": "country3",
+            "city": "city3"
+        },
         "lookingFor": "lookingFor3",
         "offers": 1,
         "imageUrl": "imageUrl3"
     },
     {
         "itemId": 4,
-        "name": "itemName4",
-        "location": "location4",
+        "title": "itemName4",
+        "location": {
+            "country": "country4",
+            "city": "city4"
+        },
         "lookingFor": "lookingFor4",
         "offers": 4,
         "imageUrl": "imageUrl4"

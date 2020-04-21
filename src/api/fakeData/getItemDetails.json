@@ -1,0 +1,17 @@
+{
+    "itemId": 1,
+    "title": "itemName1",
+    "description":"desc",
+    "location": {
+        "country": "country1",
+        "city": "city1"
+    },
+    "submitedDate":"date",
+    "lookingFor": {
+        "title":"title",
+        "desc":"desc"
+    },
+    "status": "offerd",
+    "offers": 1,
+    "imageUrl": ["imageUrl1","imageUrl2","imageUrl3"]
+}
