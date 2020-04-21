@@ -1,5 +1,6 @@
 {
     "itemId": 1,
+    "userId": 111,
     "title": "itemName1",
     "description":"desc",
     "location": {

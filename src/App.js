@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Layout from './components/Layout/Layout';
-import styles from './App.module.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 import Home from './components/Home/Home';

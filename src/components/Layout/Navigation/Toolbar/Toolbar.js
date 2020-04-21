@@ -40,8 +40,8 @@ class Toolbar extends Component {
                 <MDBNavbarToggler onClick={this.onClick} />
                 <MDBCollapse isOpen={this.state.collapse} navbar>
                   <MDBNavbarNav right>
-                  <MDBNavItem active>
-                   <MDBNavLink  to="/">Home</MDBNavLink>
+                  <MDBNavItem className={styles.NavigationItem} >
+                   <MDBNavLink activeClassName={styles.active} to="/">Home</MDBNavLink>
                  </MDBNavItem>
                  <MDBNavItem >
                    <MDBNavLink  to="/about">About Us</MDBNavLink>
