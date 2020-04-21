@@ -9,7 +9,7 @@ const layout = (props) => {
     return(
         <React.Fragment>
             <Toolbar isAuth={props.isAuth} />
-            <Header />
+            {/* <Header /> */}
             <main className={classes.Content}>
                 {props.children}
             </main>
