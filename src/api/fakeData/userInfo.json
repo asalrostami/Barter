@@ -1,5 +1,20 @@
 {
     "userId": 111,
     "name": "asal",
-    "email": "a@gmail.com"
+    "email": "a@gmail.com",
+    "items": ["itemId1","itemId2","itemId3", "itemId4"],
+    "requestedItems":[
+        {
+            "myItemId1":"itemId1",
+            "requestedItemId1":"reqItemId1"
+        },
+        {
+            "myItemId1":"itemId2",
+            "requestedItemId1":"reqItemId2"
+        },
+        {
+            "myItemId1":"itemId3",
+            "requestedItemId1":"reqItemId3"
+        }
+    ]
 }
