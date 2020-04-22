@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
 import 'mdbreact/dist/css/mdb.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -7,15 +11,23 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import authReducer from './store/reducers/auth';
+import userReducer from './store/reducers/user';
 
-ReactDOM.render(
-  <React.StrictMode>
-     <BrowserRouter>
+const rootReducer = combineReducers({
+   auth: authReducer,
+   user: userReducer
+})
+
+const store = createStore(rootReducer,applyMiddleware(thunk));
+
+const app = (
+   <Provider store={store}>
+      <BrowserRouter>
         <App />
      </BrowserRouter>
-  
-  </React.StrictMode>,
-  document.getElementById('root')
+   </Provider>     
 );
 
+ReactDOM.render(app,document.getElementById('root'));
 serviceWorker.unregister();
