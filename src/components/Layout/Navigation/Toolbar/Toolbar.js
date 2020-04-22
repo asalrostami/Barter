@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styles from './Toolbar.module.css';
 import logo from '../../../../assets/Images/logo2.png';
-import image2 from '../../../../assets/Images/1.jpg';
+import image2 from '../../../../assets/Images/bg.jpg';
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBMask, MDBView } from "mdbreact";
 
 class Toolbar extends Component {
