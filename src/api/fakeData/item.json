@@ -12,7 +12,9 @@
         "title":"title",
         "desc":"desc"
     },
-    "status": "offerd",
+    "receivedOffers": ["itemId1","itemId2","itemId3"],
     "offers": 1,
+    "status": "offerd",
+    "exchangedWith":"itemId",
     "imageUrl": ["imageUrl1","imageUrl2","imageUrl3"]
 }
