@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
+import Cards from '../Home/Cards/Cards';
+import Filter from '../Home/Filter/Filter';
 
-const home = (props) => {
-    return(
-        <div>
-            <h1>Home</h1>
-        </div>
-    )
-};
+class Home extends Component  {
+    render() {
+        return(
+            <>
+                <Cards />
+                <Filter />
+            </>
+        )
+    }
+}
 
-export default home;
+export default Home;
