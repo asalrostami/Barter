@@ -12,6 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 import authReducer from './store/reducers/auth';
 import userReducer from './store/reducers/user';
 
+
 const rootReducer = combineReducers({
    auth: authReducer,
    user: userReducer

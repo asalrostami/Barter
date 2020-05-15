@@ -11,7 +11,7 @@ class Toolbar extends Component {
   
   render() {
     return (
-      <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
+      <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg"  fixed="top" >
       <Navbar.Brand href="#home">
         <img
           alt=""
