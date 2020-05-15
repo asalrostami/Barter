@@ -2,6 +2,7 @@ import React from 'react';
 import image1 from '../../../../assets/Images/barter2.png';
 import {Card,Button} from 'react-bootstrap';
 import styles from './Card.module.css';
+import CardDesc from './CardDesc/CardDesc';
 
 
 const card = (props) => {
@@ -11,8 +12,7 @@ const card = (props) => {
           <Card.Body className="text-center">
             <Card.Title>Card title</Card.Title>
             <Card.Text>
-              This is a wider card with supporting text below as a natural lead-in to
-              additional content. This content is a little bit longer.
+              <CardDesc />
             </Card.Text>
             <Button  variant="warning">I'm Interested</Button>
           </Card.Body>

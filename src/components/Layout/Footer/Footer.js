@@ -9,7 +9,7 @@ const footer = () =>  {
           <footer className={`page-footer  fixed-bottom  ${styles.color} `} bg-dark sticky="button" >
             <div className='container footer-copyright text-center py-3 text-white-50'>  
                 &copy; {new Date().getFullYear()} Copyright: 
-                 <a href="https://www.Barter.com"> Barter.com </a>  
+                 <a href="https://www.Barter.com" className={styles.font_color}> Barter.com </a>  
             </div>
          </footer>
         </>
