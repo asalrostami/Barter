@@ -32,7 +32,7 @@ class Toolbar extends Component {
               : null }
             {!this.props.isAuth
               ? <Nav.Item><IndexLinkContainer to={"/auth"}><Nav.Link>Authenticate</Nav.Link></IndexLinkContainer></Nav.Item>
-            : <Nav.Item><IndexLinkContainer to={"/logout"}><Nav.Link>Logout</Nav.Link></IndexLinkContainer></Nav.Item> 
+            : <Nav.Item ><IndexLinkContainer  to={"/logout"}><Nav.Link>Logout</Nav.Link></IndexLinkContainer></Nav.Item> 
             }
     
           </Nav>   
