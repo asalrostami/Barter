@@ -4,7 +4,8 @@ import {Button} from 'react-bootstrap';
 
 const button = (props) => {
     return (
-        <Button variant="warning" onClick={props.clicked}>{props.title}</Button>
+    //    <button className={styles.button}  onClick={props.clicked}>{props.title}</button>
+       <Button variant="warning" size="md" onClick={props.clicked}>{props.title}</Button>
     );   
 }
 

@@ -1,6 +1,17 @@
-.size {
-    width: 80px;
-    height: 30px;
-    padding: 0.8rem;
-    color: tomato;
+.button {
+    background-color: rgb(14, 218, 218);
+    border-radius: 8px;
+     color: white;
+     cursor: pointer;
 }
+
+.btn-warning {
+    background-color: rgb(238, 234, 28);
+    color: black; 
+}
+.btn-md {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 130px;
+    font-size: 1rem;
+  }
