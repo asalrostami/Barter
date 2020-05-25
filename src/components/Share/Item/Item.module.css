@@ -1,0 +1,20 @@
+.con {
+    border: 2px solid violet;
+}
+.row {
+    border: 2px solid blue;
+}
+.col {
+    border: 2px solid green;
+    margin: 5px;
+   
+}
+.btnL {
+    text-align: right;
+}
+.btnCen {
+    text-align: center;
+}
+.btnR {
+    text-align: left;
+}
