@@ -1,5 +1,5 @@
 import React from 'react';
-import 
+import Button from '../Share/Button/Button';
 
 const dashboard = (props) => {
   const  addItemHandler = () => {
@@ -8,7 +8,7 @@ const dashboard = (props) => {
     return(
         <div>
             <h1>Dashboard</h1>
-            <button onClick={addItemHandler}>Add New Item</button>
+            <Button title="Add New Item" clicked={addItemHandler} />
         </div>
     )
 };
