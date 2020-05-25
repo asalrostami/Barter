@@ -1,8 +1,9 @@
 import React from 'react';
 import image1 from '../../../../assets/Images/barter2.png';
-import {Card,Button} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import styles from './Card.module.css';
 import CardDesc from './CardDesc/CardDesc';
+import Button from '../../../Share/Button/Button';
 
 
 const card = (props) => {
@@ -14,7 +15,7 @@ const card = (props) => {
             <Card.Text>
               <CardDesc />
             </Card.Text>
-            <Button  variant="warning">I'm Interested</Button>
+            <Button  title="I'm Interested"/>
           </Card.Body>
         </Card>
     );
