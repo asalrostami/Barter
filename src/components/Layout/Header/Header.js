@@ -9,8 +9,8 @@ import { Carousel} from 'react-bootstrap'
 const header = (props) => {
   
    return (
-     <div className={styles.Content}>
-    <Carousel>
+     <div className={styles.Content} >
+    <Carousel >
       <Carousel.Item>
         <img
           className={`d-block w-100 ${styles.Size}`}
