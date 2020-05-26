@@ -1,12 +1,16 @@
 .con {
-    border: 2px solid violet;
+    margin-top: 30px;
+   /* border: 1px solid black; */
+   margin-bottom: 80px;
 }
 .row {
     border: 2px solid blue;
+    
 }
 .col {
-    border: 2px solid green;
+     /* border: 2px solid green; */
     margin: 5px;
+    text-align: center;
    
 }
 .btnL {
@@ -17,4 +21,53 @@
 }
 .btnR {
     text-align: left;
+}
+
+.div {
+    margin-left: 20px;
+}
+.image {
+    width: 250px;
+    height: 250px;
+}
+.image_sub {
+    width: 70px;
+    height: 70px;
+}
+
+.font_title {
+    font-weight: bold;
+    font-size: 24px;
+}
+.font_desc {
+    font-weight: bold;
+    font-size: 16px;
+}
+.font_placeholder {
+    
+}
+@media (max-width: 992px) {
+    .font_title {
+        font-size: 20px;
+    }
+    .font_desc {
+        font-size: 14px;
+    }
+}
+@media (max-width: 768px) {
+    .font_title {
+        font-size: 18px;
+    }
+    .font_desc {
+        font-size: 13px;
+    }
+}
+@media (max-width: 576px) {
+    .font_title {
+        font-size: 15px;
+    }
+    .font_desc {
+        font-size: 13px;
+    }
+
 }
