@@ -1,20 +1,49 @@
 import React from 'react';
-import {Row,Container, Col,Form,Image} from 'react-bootstrap';
+import {Row,Container, Col,Form,Image,ToggleButton} from 'react-bootstrap';
 import styles from './Item.module.css';
 import Button from '../Button/Button';
 import image from '../../../assets/Images/barter.jpg'
 
 const item = (props) => {
+
+    // state = {
+    //     switch1: true,
+    //   }
+
+   const handleSwitchChange = nr => () => {
+        alert("switch has been changed");
+        // let switchNumber = `switch${nr}`;
+        // this.setState({
+        //   [switchNumber]: !this.state[switchNumber]
+        // });
+      }
+
     return(
         <Container className={styles.con} fluid="md">
         <Row >
           <Col className={styles.col}>
-            <Row className={styles.btnCen}> <Image className={styles.image} src={image} rounded /></Row>
+            <Row><Col><Image className={styles.image} src={image} rounded /></Col> </Row>
             <Row >
-            <Col className={[styles.col, styles.btnL].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
+            <Col className={[styles.col, styles.dirL].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
             <Col className={styles.col}> <Image className={styles.image_sub} src={image} rounded /> </Col>
-            <Col className={[styles.col, styles.btnR].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
-            </Row>     
+            <Col className={[styles.col, styles.dirR].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
+            </Row>
+            <Row>
+            <Col>
+            <div className='custom-control custom-switch'>
+                <input
+                type='checkbox'
+                className='custom-control-input'
+                id='customSwitches'
+                onChange={handleSwitchChange(1)}
+                readOnly
+                />
+                <label className='custom-control-label' htmlFor='customSwitches'>
+                For Barter
+                </label>
+            </div>
+            </Col>
+        </Row>     
           </Col>
           <Col>
               <Form>
@@ -70,16 +99,17 @@ const item = (props) => {
           </Col>
         </Row >
         <Row >
-            <Col xs={4} sm={4} md={4} lg={4} className={styles.btnL}>
+            <Col xs={4} sm={4} md={4} lg={4} className={styles.dirL}>
              <Button  title="DELETE"/>
             </Col>
-            <Col xs={4} sm={4} md={4} lg={4} className={styles.btnCen}>
+            <Col xs={4} sm={4} md={4} lg={4} className={styles.dirCen}>
              <Button  title="ADD"/>
             </Col>
-            <Col xs={4} sm={4} md={4} lg={4} className={styles.btnR}>
+            <Col xs={4} sm={4} md={4} lg={4} className={styles.dirR}>
              <Button  title="CANCLE"/>
             </Col>   
         </Row>
+       
       </Container>
     )
 };

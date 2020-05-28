@@ -2,24 +2,26 @@
     margin-top: 30px;
    /* border: 1px solid black; */
    margin-bottom: 80px;
+   
 }
 .row {
     border: 2px solid blue;
     
 }
 .col {
-     /* border: 2px solid green; */
-    margin: 5px;
+     border: 2px solid green;
+    margin-top: 20px;
     text-align: center;
+    
    
 }
-.btnL {
+.dirL {
     text-align: right;
 }
-.btnCen {
+.dirCen {
     text-align: center;
 }
-.btnR {
+.dirR {
     text-align: left;
 }
 
