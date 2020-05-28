@@ -21,29 +21,34 @@ const item = (props) => {
     return(
         <Container className={styles.con} fluid="md">
         <Row >
-          <Col className={styles.col}>
-            <Row><Col><Image className={styles.image} src={image} rounded /></Col> </Row>
-            <Row >
-            <Col className={[styles.col, styles.dirL].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
-            <Col className={styles.col}> <Image className={styles.image_sub} src={image} rounded /> </Col>
-            <Col className={[styles.col, styles.dirR].join(' ')}> <Image className={styles.image_sub} src={image} rounded /> </Col>
-            </Row>
-            <Row>
-            <Col>
-            <div className='custom-control custom-switch'>
-                <input
-                type='checkbox'
-                className='custom-control-input'
-                id='customSwitches'
-                onChange={handleSwitchChange(1)}
-                readOnly
-                />
-                <label className='custom-control-label' htmlFor='customSwitches'>
-                For Barter
-                </label>
-            </div>
-            </Col>
-        </Row>     
+            <Col className={styles.col}>
+                <Row><Col><Image className={styles.image} src={image} rounded /></Col> </Row>
+                <Row className={styles.row} padding>
+                    <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
+                    <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
+                    <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
+                </Row>
+                {/* <Row><h1> </h1></Row>
+                <Row><h1> </h1></Row>
+                <Row><h1> </h1></Row>
+                <Row></Row> */}
+                <Row>
+                
+                    <Col className={styles.space}  >
+                        <div className='custom-control custom-switch'>
+                            <input
+                            type='checkbox'
+                            className='custom-control-input'
+                            id='customSwitches'
+                            onChange={handleSwitchChange(1)}
+                            readOnly
+                            />
+                            <label className='custom-control-label' htmlFor='customSwitches'>
+                            For Barter
+                            </label>
+                        </div>
+                    </Col>
+                </Row>     
           </Col>
           <Col>
               <Form>
