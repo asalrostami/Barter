@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Row,Col,Image,Modal,Button} from 'react-bootstrap';
+import {Row,Col,Image,Button} from 'react-bootstrap';
 import styles from './Images.module.css';
-import CustomModel from '../../../Share/Model/Model';
+import Model from '../../../UI/Model/Model';
 
 class Images extends Component {
     state = {
@@ -9,6 +9,7 @@ class Images extends Component {
         selectedFile: null,
         imagePreviewUrl: null,
         imgURLList: [null,null,null],
+        showModel: false
     }
 
     // for(let i=0; i < 3; i++) {
@@ -34,7 +35,7 @@ class Images extends Component {
           });
         }
      
-        const file = reader.readAsDataURL(event.target.files[0])
+       reader.readAsDataURL(event.target.files[0])
         // console.log("reader url" , file);
       }
 
@@ -42,7 +43,12 @@ class Images extends Component {
         const reveiwImageURL = this.state.imagePreviewUrl;
 
       }
-      
+      modelCloseHandler = () => {
+        this.setState({showModel: false})
+      }
+      deleteContinueHandler = () => {
+
+      }
       onClickHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
@@ -54,12 +60,9 @@ class Images extends Component {
     //   })
      }
 
-     popupShowHandler = () => {
-       return(
-        <CustomModel />
-       )
-        
-     }
+     togglePopup = () => {  
+      this.setState({ showModel: !this.state.showModel});  
+      }  
       
     deleteImageHandler = () => {
 
@@ -95,7 +98,12 @@ class Images extends Component {
       );
              
         return (
+          
             <div>
+               {this.state.showModel ? 
+                       <Model show={this.state.showModel}
+                       handleClose={this.togglePopup} />
+                      : null}
                   <Row><Col>
                       <Image className={styles.image} src={this.state.imagePreviewUrl} rounded />
                   </Col> </Row>
@@ -103,7 +111,7 @@ class Images extends Component {
                     <Col xs="12" sm="12" md="12">
                       <button className={styles.button} 
                       disabled={this.state.imagePreviewUrl == null ? true : false} 
-                      onClick={this.popupShowHandler}>Delete this Image</button>
+                      onClick={this.togglePopup}>Delete this Image</button>
                     </Col>
                   </Row>
                     <Row className={styles.row}>

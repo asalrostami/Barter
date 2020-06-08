@@ -6,3 +6,4 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const USER_SET = 'USER_SET';
 
+export const SHOW_MODEL = 'SHOW_MODEL';
