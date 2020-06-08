@@ -1,13 +1,26 @@
 import React,{Component} from 'react';
-import {Row,Container, Col,Form,Image,ToggleButton} from 'react-bootstrap';
+import {Row,Container, Col,Form,Image} from 'react-bootstrap';
 import styles from './Item.module.css';
 import Button from '../Button/Button';
-import image from '../../../assets/Images/barter.jpg'
+// import image from '../../../assets/Images/barter.jpg';
+import Images from '../../Share/Item/Images/Images';
 
 class Item extends Component {
-             // state = {
-    //     switch1: true,
-    //   }
+     state = {
+
+        // switch1: true,
+      }
+
+
+     getCurrentDate = () => {
+        let today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+       return today;
+    }
 
     handleSwitchChange = nr => () => {
         alert("switch has been changed");
@@ -22,12 +35,7 @@ class Item extends Component {
             <Container className={styles.con} fluid="md">
             <Row >
                 <Col className={styles.col}>
-                    <Row><Col><Image className={styles.image} src={image} rounded /></Col> </Row>
-                    <Row className={styles.row} padding>
-                        <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
-                        <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
-                        <Col className={styles.col} xs="4" sm="4" md="4"> <Image className={styles.image_sub} src={image} rounded /> </Col>
-                    </Row>
+                    <Images />
                     <Row>
                     
                         <Col className={styles.space}  >
@@ -36,7 +44,7 @@ class Item extends Component {
                                 type='checkbox'
                                 className='custom-control-input'
                                 id='customSwitches'
-                                onChange={handleSwitchChange(1)}
+                                onChange={this.handleSwitchChange(1)}
                                 readOnly
                                 />
                                 <label className='custom-control-label' htmlFor='customSwitches'>
@@ -77,7 +85,7 @@ class Item extends Component {
                     <Form.Group as={Row} controlId="exampleForm.ControlInput1">
                         <Form.Label className={styles.font_desc} column sm="4">Submited Date</Form.Label>
                         <Col sm="8">
-                        <Form.Control plaintext readOnly defaultValue="21/03/2020" />
+                        <Form.Control plaintext readOnly defaultValue={this.getCurrentDate()} />
                         </Col>
                     </Form.Group>
                     </div>

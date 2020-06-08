@@ -32,25 +32,7 @@
 .div {
     margin-left: 20px;
 }
-.image {
-    width: 250px;
-    height: 250px;
-    
-}
-.image_sub {
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
-}
-.image_sub:hover{
-    -moz-box-shadow: 0 0 10px rgb(94, 91, 91);
-    -webkit-box-shadow: 0 0 10px rgb(94, 91, 91);
-    box-shadow: 0 0 10px rgb(94, 91, 91);
-    width: 75px;
-    height: 75px;
-    margin-bottom: -5px;
 
-}
 
 .font_title {
     font-weight: bold;
@@ -89,17 +71,6 @@
     .space {
         margin: 30px;
     }
-    .image_sub {
-        width: 50px;
-        height: 50px;
-    }
-    .image_sub:hover{
-        width: 55px;
-        height: 55px;
-    }
-    .image {
-        width: 200px;
-        height: 200px;
-    }
+    
 
 }

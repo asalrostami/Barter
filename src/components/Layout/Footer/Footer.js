@@ -6,7 +6,7 @@ import styles from './Footer.module.css';
 const footer = () =>  {
     return (
         <>
-          <footer className={`page-footer  fixed-bottom  ${styles.color} `} bg-dark sticky="button" >
+          <footer className={`page-footer  fixed-bottom  ${styles.color} `}  sticky="button" >
             <div className='container footer-copyright text-center py-3 text-white-50'>  
                 &copy; {new Date().getFullYear()} Copyright: 
                  <a href="https://www.Barter.com" className={styles.font_color}> Barter.com </a>  

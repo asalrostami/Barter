@@ -1,0 +1,100 @@
+.image {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    
+}
+.App {
+    width: 70px;
+    height: 70px;
+}
+.image_sub {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    
+}
+.image_sub:hover{
+    -moz-box-shadow: 0 0 10px rgb(94, 91, 91);
+    -webkit-box-shadow: 0 0 10px rgb(94, 91, 91);
+    box-shadow: 0 0 10px rgb(94, 91, 91);
+    width: 75px;
+    height: 75px;
+
+}
+.row {
+    /* border: 2px solid blue; */
+    margin-top: 20px;
+    
+}
+.col {
+     /* border: 1px solid green; */
+     height: 75px;  
+}
+
+.dirL {
+    text-align: right;
+}
+.dirCen {
+    text-align: center;
+}
+.dirR {
+    text-align: left;
+    margin-left: 0px;
+}
+.display {
+    display: none;
+}
+.label{
+    /* border: 1px solid black; */
+    font-size: 14px;
+    color: #8B4513;
+    cursor: pointer;
+    width: 100px;
+    margin-top: 20px;    
+}
+.label:hover{
+    font-size: 16px;
+    color: #F7C212;
+}
+.button {
+    border: none;
+    font-size: 10px;
+    background-color: #dcdcdc;
+}
+.button:hover{
+    font-size: 11px;
+    color: #F7C212;
+}
+.button:active{
+    border: 0 !important;
+    box-shadow: none !important;
+}
+.button_disabled {
+    font-size: 10px;
+    color:  #dcdcdc;
+    pointer-events: none;
+  }
+
+@media (max-width: 576px) {
+    .image_sub {
+        width: 50px;
+        height: 50px;
+    }
+    .image_sub:hover{
+        width: 55px;
+        height: 55px;
+    }
+    .image {
+        width: 200px;
+        height: 200px;
+    }
+    .label{
+        margin-top: 10px;
+        font-size: 12px;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+
+}
