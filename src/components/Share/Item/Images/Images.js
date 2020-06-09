@@ -46,8 +46,17 @@ class Images extends Component {
       modelCloseHandler = () => {
         this.setState({showModel: false})
       }
-      deleteContinueHandler = () => {
+      deleteImageHandler = () => {
+        const selectedURL = this.state.imagePreviewUrl;
+        const list = this.state.imgURLList
+        const selectedURLIndex = list.indexOf(selectedURL);
+        if(selectedURLIndex > -1) {
+            list.splice(selectedURLIndex, 1, null);
+        }
 
+        console.log("list" , list);
+        this.setState({imgURLList:list,imagePreviewUrl:null }
+        , this.togglePopup)
       }
       onClickHandler = () => {
         const data = new FormData()
@@ -64,10 +73,6 @@ class Images extends Component {
       this.setState({ showModel: !this.state.showModel});  
       }  
       
-    deleteImageHandler = () => {
-
-
-    }
     displayImageHandler = (index) => {
         const imgList = this.state.imgURLList;
         const imgURL = imgList[index];
@@ -102,7 +107,8 @@ class Images extends Component {
             <div>
                {this.state.showModel ? 
                        <Model show={this.state.showModel}
-                       handleClose={this.togglePopup} />
+                       handleClose={this.togglePopup}
+                       deleteImage={this.deleteImageHandler} />
                       : null}
                   <Row><Col>
                       <Image className={styles.image} src={this.state.imagePreviewUrl} rounded />

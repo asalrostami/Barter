@@ -66,14 +66,13 @@
     font-size: 11px;
     color: #F7C212;
 }
-.button:active{
-    border: 0 !important;
-    box-shadow: none !important;
+.button:focus{
+    outline:none;
 }
-.button_disabled {
+.button:disabled:hover {
+    pointer-events: none;  /**<-----------*/
     font-size: 10px;
-    color:  #dcdcdc;
-    pointer-events: none;
+    color:  rgb(175, 172, 172);
   }
 
 @media (max-width: 576px) {
