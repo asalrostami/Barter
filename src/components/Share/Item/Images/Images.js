@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row,Col,Image,Button} from 'react-bootstrap';
+import {Row,Col,Image} from 'react-bootstrap';
 import styles from './Images.module.css';
 import Model from '../../../UI/Model/Model';
 
@@ -53,9 +53,13 @@ class Images extends Component {
         if(selectedURLIndex > -1) {
             list.splice(selectedURLIndex, 1, null);
         }
-
-        console.log("list" , list);
-        this.setState({imgURLList:list,imagePreviewUrl:null }
+        let imgPreviewSet = null;
+         list.map((url) => {
+          if(url !== null) {
+             imgPreviewSet = url;
+          }
+        })
+        this.setState({imgURLList:list,imagePreviewUrl:imgPreviewSet }
         , this.togglePopup)
       }
       onClickHandler = () => {
@@ -75,7 +79,6 @@ class Images extends Component {
       
     displayImageHandler = (index) => {
         const imgList = this.state.imgURLList;
-        const imgURL = imgList[index];
         this.setState({imagePreviewUrl: imgList[index]})
        console.log("index",index );
       //  console.log("img url",this.state.imagePreviewUrl)
