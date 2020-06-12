@@ -33,6 +33,7 @@ class Images extends Component {
             imagePreviewUrl: reader.result,
             imgURLList: list
           });
+          this.props.onGetImages(list);
         }
      
        reader.readAsDataURL(event.target.files[0])
@@ -80,8 +81,7 @@ class Images extends Component {
     displayImageHandler = (index) => {
         const imgList = this.state.imgURLList;
         this.setState({imagePreviewUrl: imgList[index]})
-       console.log("index",index );
-      //  console.log("img url",this.state.imagePreviewUrl)
+
     }
     render(){
         console.log("array lenght1",this.state.imgURLList.length);

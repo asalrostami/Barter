@@ -8,26 +8,91 @@ import Images from '../../Share/Item/Images/Images';
 class Item extends Component {
      state = {
          item: {
-             itemId:null,
-             title: null,
-             location: {
-                 country: null,
-                 city: null
+             itemId:{
+                 elementType: 'label',
+                 name: 'ItemID',
+                 value: '',
+                 valid: false,
+                 required: true
              },
-             description: null,
-             submitedDate: null,
+             title: {
+                elementType: 'input',
+                name: 'ItemTitle',
+                value: '',
+                placeholder:'Title',
+                valid: false,
+                required: true
+            },
+            description:  {
+                elementType: 'textarea',
+                name: 'ItemDesc',
+                value: '',
+                valid: false,
+                required: false
+            },
+             
+            country: {
+                elementType: 'input',
+                name: 'country',
+                value: '',
+                placeholder:'Country',
+                valid: false,
+                required: true
+            },
+            city: {
+                elementType: 'input',
+                name: 'city',
+                value: '',
+                placeholder:'City',
+                valid: false,
+                required: true
+            },
+            
+             submitedDate:  {
+                elementType: 'plaintext',
+                name: 'SubmitedDate',
+                value: '',
+                valid: false,
+                required: true
+            },
              lookingfor: {
-                 title: null,
-                 description: null
+                 title:  {
+                    elementType: 'input',
+                    name: 'RequestedTitle',
+                    value: '',
+                    placeholder:'Title',
+                    valid: false,
+                    required: true
+                },
+                 description:  {
+                    elementType: 'textarea',
+                    name: 'RequestedDesc',
+                    value: '',
+                    valid: false,
+                    required: false
+                },
              },
              images:[],
-             forBarter: false,
-             status:null
+             forBarterSwitch:  {
+                elementType: 'switch',
+                name: 'ForBurterSwitch',
+                value: false,
+                required: false
+
+            },
+             status: {
+                elementType: 'label',
+                name: 'Status',
+                value: "Offered",
+                required: false
+               
+            },
          },
          
         visible: false,
-        formIsValid: false
-        // switch1: true,
+        formIsValid: true,
+        addingItem: true,
+        
       }
 
 
@@ -42,36 +107,50 @@ class Item extends Component {
     }
     inputChangeHandler = (e) => {
         const value = e.target.value;
-        const isValid = checkValidity(value,"required");
-        this.setState({formIsValid:isValid})
         // console.log("input value", value);
     }
 
-    validityCheckHandler = () =>{
-
+    validityCheckHandler = (value, rules) =>{
+        const isValid = checkValidity(value,rules);
+        this.setState({formIsValid:isValid})
     }
     addItemHandler = () => {
+        if(this.state.addingItem){
+            let itemInfo = null;
+
+        }
+       
+        // checkValidity 
 
     }
     modifyItemHandler = () => {
+        // checkValidity 
+
 
     }
     deleteItemHandler = () => {
 
     }
     cancelItemHandler = () => {
-
+        this.props.history.goBack();
     }
-    handleSwitchChange = nr => () => {
-        alert("switch has been changed");
-        // let switchNumber = `switch${nr}`;
-        // this.setState({
-        //   [switchNumber]: !this.state[switchNumber]
-        // });
-      }
+    handleSwitchChange = () => {
+        const forBarter =this.state.item.forBarterSwitch 
+        for(let keys in forBarter){
+            if(keys === "value"){
+                forBarter[keys] = !forBarter[keys] ;
+            }
+        }
+        this.setState({forBarterSwitch:forBarter});
+        console.log("switchBarter", forBarter["value"]);
+    }
+    // callback function
+    getImagesHandler = (images) => {
+        this.setState({images:images});
+    }
     render() {
         let errorLB = null;
-        if(this.state.formIsValid) {
+        if(!this.state.formIsValid) {
             errorLB = ( <label className={styles.label}>Please enter the required information</label>)
         }
         const button = (title, event) => {
@@ -80,24 +159,63 @@ class Item extends Component {
                 </Col>);
         }
 
-        const formGroupText = (title) => {
+        const formGroupText = (placeholder,value) => {
             return ( <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                    <Form.Label className={styles.font_desc} column sm="3">{title}</Form.Label>
+                    <Form.Label className={styles.font_desc} column sm="3">{placeholder}</Form.Label>
                     <Col sm="9">
-                    <Form.Control type="text" placeholder={title} onChange={this.inputChangeHandler} />
+                    <Form.Control   type="text" value={value} placeholder={placeholder} onChange={this.inputChangeHandler} />
                     </Col>
-                </Form.Group>
+                </Form.Group>    
              );
         }
         const formGroupTextarea = () => {
             return ( <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
                     <Form.Label className={styles.font_desc} column sm="3">Descripton</Form.Label>
                     <Col sm="9">
-                    <Form.Control as="textarea" rows="3" />
+                    <Form.Control  as="textarea" rows="3" />
                     </Col>
                 </Form.Group>
             );
         }
+        const fromGroupPlainText = () => {
+            return(
+                <Form.Group as={Row} controlId="exampleForm.ControlInput1">
+                    <Form.Label className={styles.font_desc} column sm="4" md="4">Submited Date</Form.Label>
+                    <Col sm="8" md="8">
+                    <Form.Control plaintext readOnly defaultValue={this.getCurrentDate()} />
+                    </Col>
+                </Form.Group>
+            );
+        }
+        const itemElementsArray = [];
+        for (let key in this.state.item) {
+            itemElementsArray.push({
+                id: key,
+                config:this.state.item[key]
+            });
+        }
+        console.log("itemElementsArray" ,itemElementsArray )
+        let itemForm = null;
+        itemForm = (
+            <Form>
+                    <Form.Label className={styles.font_title}>Item's Information :</Form.Label>
+                    <div className={[styles.div ,styles.font_desc].join(' ')}>
+                        {formGroupText("Title")}
+                        {formGroupTextarea()}
+                        {formGroupText("Country")}
+                        {formGroupText("City")}
+                        {fromGroupPlainText()}
+                    </div>
+                        <Form.Label  className={styles.font_title}>Looking for :</Form.Label>
+                    <div className={[styles.div ,styles.font_desc].join(' ')}>
+                        {formGroupText("Title")}
+                        {formGroupTextarea()}
+                    </div>
+            </Form>
+        );
+        
+        
+    
         return(
             <Container className={styles.con} fluid="md">
                 <Row>
@@ -107,7 +225,7 @@ class Item extends Component {
                 </Row>
                 <Row >
                     <Col className={styles.col}>
-                        <Images />
+                        <Images onGetImages={this.getImagesHandler}/>
                         <Row>
                         
                             <Col className={styles.space}  >
@@ -116,7 +234,7 @@ class Item extends Component {
                                     type='checkbox'
                                     className='custom-control-input'
                                     id='customSwitches'
-                                    onChange={this.handleSwitchChange(1)}
+                                    onChange={this.handleSwitchChange}
                                     readOnly
                                     />
                                     <label className='custom-control-label' htmlFor='customSwitches'>
@@ -127,26 +245,7 @@ class Item extends Component {
                         </Row>     
                 </Col>
                 <Col>
-                    <Form>
-                    <Form.Label className={styles.font_title}>Item's Information :</Form.Label>
-                    <div className={[styles.div ,styles.font_desc].join(' ')}>
-                        {formGroupText("Title")}
-                        {formGroupTextarea()}
-                        {formGroupText("Country")}
-                        {formGroupText("City")}
-                        <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                            <Form.Label className={styles.font_desc} column sm="4" md="4">Submited Date</Form.Label>
-                            <Col sm="8" md="8">
-                            <Form.Control plaintext readOnly defaultValue={this.getCurrentDate()} />
-                            </Col>
-                        </Form.Group>
-                        </div>
-                        <Form.Label  className={styles.font_title}>Looking for :</Form.Label>
-                        <div className={[styles.div ,styles.font_desc].join(' ')}>
-                        {formGroupText("Title")}
-                        {formGroupTextarea()}
-                        </div>
-                    </Form>
+                    {itemForm}
                 </Col>
                 </Row >
                 <Row >
