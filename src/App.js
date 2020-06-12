@@ -16,7 +16,7 @@ class App extends Component{
     pageName: ''
   }
   render() {
-    let isAuthenticated = true;
+    let isAuthenticated = false;
     let routs = (
       <Switch>
         <Route path="/about"  component={AboutUs} />
@@ -29,9 +29,9 @@ class App extends Component{
     if(isAuthenticated) {
       routs = (
         <Switch>  
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/desc" component={Desc} />
-          <Route path="/item" component={Item} />
+          <Route path="/dashboard/item" component={Item} />
           <Route path="/about" component={AboutUs} />
           <Route path="/auth" component={Auth} />
           <Route path="/logout" component={Logout} /> 

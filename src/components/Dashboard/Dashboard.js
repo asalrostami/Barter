@@ -3,7 +3,8 @@ import Button from '../Share/Button/Button';
 
 const dashboard = (props) => {
   const  addItemHandler = () => {
-        props.history.push('/item');
+        props.history.push('/dashboard/item');
+        
     }
     return(
         <div>
