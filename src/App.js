@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Layout from './components/Layout/Layout';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import Home from './components/Home/Home';
 import AboutUs from './components/AboutUs/AboutUs';
@@ -9,6 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Desc from './components/Description/Desc';
 import Item from './components/Share/Item/Item';
 import Logout from './components/Auth/Logout/Logout';
+import * as actions from './store/actions/auth';
 
 
 class App extends Component{
@@ -16,7 +18,6 @@ class App extends Component{
     pageName: ''
   }
   render() {
-    let isAuthenticated = false;
     let routs = (
       <Switch>
         <Route path="/about"  component={AboutUs} />
@@ -26,7 +27,7 @@ class App extends Component{
       </Switch>
     );
 
-    if(isAuthenticated) {
+    if(this.props.isAuthenticated) {
       routs = (
         <Switch>  
           <Route path="/dashboard" exact component={Dashboard} />
@@ -40,10 +41,10 @@ class App extends Component{
       </Switch>
       );
     }
-    console.log(`isAuthApp ${isAuthenticated}`);
+    console.log(`isAuthApp ${this.props.isAuthenticated}`);
     return (
       <div>
-        <Layout isAuth={isAuthenticated}>
+        <Layout isAuth={this.props.isAuthenticated}>
           {routs}
         </Layout>
         
@@ -57,5 +58,10 @@ class App extends Component{
   }
   
 }
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
 
-export default withRouter(App);
+export default withRouter (connect(mapStateToProps)(App));

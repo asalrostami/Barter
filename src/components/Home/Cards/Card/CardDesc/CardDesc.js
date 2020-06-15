@@ -5,8 +5,7 @@ import {Container,Row,Col } from 'react-bootstrap';
 
 const cardDesc = (props) => {
     return (
-        <div className={styles.Content}>
-            <Container className= "container-fluid padding">
+            <Container className= {`"container-fluid" ${styles.Content}`}>
                 <Row className= {styles.row}>
                     <Col xs={6} md={6} lg={6} className={styles.font_title}>
                         <span>Location:</span>
@@ -34,7 +33,6 @@ const cardDesc = (props) => {
                     </Col>
                 </Row>
             </Container>
-       </div>
     );
 }
 

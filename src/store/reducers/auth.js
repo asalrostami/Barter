@@ -6,7 +6,9 @@ const initialState = {
     token: null,
     userId: null,
     error: null,
-    loadind: false
+    loadind: false,
+    isAuthenticated: false,
+    authRedirectPath: '/'
 }
 
 const authStart = (state, action) => {
@@ -18,7 +20,8 @@ const authSuccess = (state, action) => {
         token: action.idToken,
         userId: action.userId,
         error: null,
-        loadind: false
+        loadind: false,
+        isAuthenticated: action.isAuthenticated
     });
 }
 const authFail = (state, action) => {
@@ -28,7 +31,7 @@ const authFail = (state, action) => {
     });
 }
 const authLogout = (state, action) => {
-    return updateObject(state, { token: null, userId: null});
+    return updateObject(state, { token: null, userId: null, isAuthenticated: false});
 }
 
 const reducer = (state = initialState, action) => {
