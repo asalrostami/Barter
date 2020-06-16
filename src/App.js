@@ -10,6 +10,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Desc from './components/Description/Desc';
 import Item from './components/Share/Item/Item';
 import Logout from './components/Auth/Logout/Logout';
+import ResetPass from './components/Auth/ResetPass/ResetPass';
+import Signup from './components/Auth/Signup/Signup';
 import * as actions from './store/actions/auth';
 
 
@@ -21,7 +23,9 @@ class App extends Component{
     let routs = (
       <Switch>
         <Route path="/about"  component={AboutUs} />
-        <Route path="/auth"  component={Auth} />
+        <Route path="/auth" exact  component={Auth} />
+        <Route path="/auth/reset" component={ResetPass} />
+        <Route path="/auth/signup" component={Signup} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />
       </Switch>
@@ -34,7 +38,9 @@ class App extends Component{
           <Route path="/desc" component={Desc} />
           <Route path="/dashboard/item" component={Item} />
           <Route path="/about" component={AboutUs} />
-          <Route path="/auth" component={Auth} />
+          <Route path="/auth" exact component={Auth} />
+          <Route path="/auth/reset" component={ResetPass} />
+          <Route path="/auth/signup" component={Signup} />
           <Route path="/logout" component={Logout} /> 
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
