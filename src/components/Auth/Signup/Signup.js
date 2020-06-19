@@ -22,10 +22,17 @@ class Signup extends Component {
           if(this.props.isAuthenticated){
             this.props.history.push('/');
          }
+         let errorMessage = null;
+         if(this.props.error){
+            errorMessage = (
+                 <p>{this.props.error.message}</p>
+            )
+        }
         return(
             <>
              <div className={styles.head}>
                  <span className={styles.p}>Create Your Account</span>
+                 {errorMessage}
              </div>
              <div className={styles.div}>
                  <Formik
@@ -94,6 +101,7 @@ class Signup extends Component {
 }
 const mapStateToProps = state => {
     return {
+        error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated
     };
 };

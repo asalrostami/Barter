@@ -8,7 +8,8 @@ const initialState = {
     error: null,
     loadind: false,
     isAuthenticated: false,
-    authRedirectPath: '/'
+    authRedirectPath: '/',
+    email: null
 }
 
 const authStart = (state, action) => {
@@ -24,7 +25,18 @@ const authSuccess = (state, action) => {
         isAuthenticated: action.isAuthenticated
     });
 }
+const resetPassworsSuccess = (state, action) => {
+    return updateObject(state,{
+        email: action.email
+    });
+}
 const authFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false
+    });
+}
+const resetPassworsFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
         loading: false
@@ -40,6 +52,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL:return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
+        case actionTypes.RESET_SUCCESS: return resetPassworsSuccess(state, action);
+        case actionTypes.RESET_ERROR: return resetPassworsFail(state, action);
         default:
             return state;
     }

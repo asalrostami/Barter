@@ -4,6 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
@@ -18,13 +19,15 @@ const rootReducer = combineReducers({
    user: userReducer
 })
 
-const store = createStore(rootReducer,applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
+      
+ 
 
 const app = (
    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-     </BrowserRouter>
+         <BrowserRouter>
+             <App />
+         </BrowserRouter>
    </Provider>     
 );
 

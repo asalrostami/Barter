@@ -13,6 +13,8 @@ const card = (props) => {
   const confirmHandler = () => {
     if(!props.isAuthenticated){
       props.history.push('/auth');
+    }else{
+      props.history.push('/desc');
     }
   }
     return (

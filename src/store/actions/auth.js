@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import axios from '../../axios-items';
+import * as firebase from '../../Firebase/firebase';
 
 export const authStart = () => {
     return {
@@ -23,6 +24,20 @@ export const authFail = (error) => {
         error: error
     };
 }
+
+export const resetPasswordFail = (error) => {
+    return {
+        type: actionTypes.RESET_ERROR,
+        error: error
+    };
+}
+
+export const resetPasswordSuccess = (email) => {
+    return {
+        type: actionTypes.RESET_SUCCESS,
+        email: email
+    };
+};
 
 export const logout = () => {
     localStorage.removeItem('token');
@@ -77,3 +92,16 @@ export const setAuthRedirectPath = (path) => {
         path: path
     };
 };
+
+export const resetPassword  = email => {
+return (dispatch) => {
+      firebase
+        .passwordReset(email)
+        .then(() =>
+          dispatch(resetPasswordSuccess(email))
+        )
+        .catch(err => {
+            dispatch(resetPasswordFail(err.response.data.error));
+        })
+     }  
+  };

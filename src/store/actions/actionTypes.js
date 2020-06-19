@@ -9,3 +9,5 @@ export const USER_SET = 'USER_SET';
 
 export const SHOW_MODEL = 'SHOW_MODEL';
 
+export const RESET_SUCCESS = "RESET_SUCCESS";
+export const RESET_ERROR = "RESET_ERROR";
