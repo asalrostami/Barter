@@ -7,9 +7,14 @@ import {Form} from 'react-bootstrap';
 import * as Yup from 'yup';
 import Button from '../../Share/Button/Button';
 import {connect} from 'react-redux';
+import { resetPassword } from '../../../api/authApi';
 
 
 class ResetPass extends Component {
+    componentDidMount() {
+        this.props.onEmptyErrorMsg();
+    }
+
   state = { loading: false };
   // handleReset = async () => {
   //   const { email, dispatch } = this.props;
@@ -21,8 +26,9 @@ class ResetPass extends Component {
     render(){
         const ValidationSchema = Yup.object().shape({
             email: Yup.string()
+              .label('Email')
               .email('Invalid email')
-              .required('Required')  
+              .required('Please enter a registered email')  
           });
           // firebase init
           // let app = firebase.initializeApp({ ... });
@@ -47,9 +53,30 @@ class ResetPass extends Component {
                  initialValues={{email: '' }}
                  validationSchema={ValidationSchema}
                  onSubmit={values => {
-                    // firebase.auth().sendPasswordResetEmail(values.email)
-                     this.props.onResetPassword(values.email);
-                     console.log("email2", this.props.email);
+                    
+                    // this.props.onResetPassword(values.email).then(res => {
+                    //     alert("you've received email to reset your password!");
+                    //         this.props.history.push('/auth');
+                    // }).catch(err => {
+                    //     console.log("*************");
+                    //     console.log("error", err.message);
+                    // });
+                    //  console.log("email2", this.props.email);
+
+                    resetPassword(values.email).then((res) => {
+                        this.props.onEmptyErrorMsg();
+                        this.props.onResetPasswordSuccess(values.email); 
+                        alert("you've received email to reset your password!");
+                        this.props.history.push('/auth');
+                    }).catch(err => {
+                        console.log("error:", err.message);
+                        this.props.onResetPasswordFail(err);
+                    })
+                     
+
+                     
+                        
+    
                  }}
                  
                  >
@@ -81,7 +108,8 @@ class ResetPass extends Component {
                          </Form.Group>
                          
                          <div className={styles.div2}>
-                              <Button title="SEND EMAIL" type="submit" disabled={!isValid || isSubmitting}  />
+                              <Button title="SEND EMAIL" type="submit"  />
+                              {/* disabled={!isValid || isSubmitting}  */}
                          </div>
                     
                      </Form>
@@ -101,7 +129,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-      onResetPassword: (email) => dispatch(actions.resetPassword(email))
+      onResetPasswordSuccess: (email) => dispatch(actions.resetPasswordSuccess(email)),
+      onResetPasswordFail: (error) => dispatch(actions.resetPasswordFail(error)),
+      onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg())
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(ResetPass);

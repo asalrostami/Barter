@@ -26,17 +26,19 @@ export const authFail = (error) => {
 }
 
 export const resetPasswordFail = (error) => {
-    return {
-        type: actionTypes.RESET_ERROR,
-        error: error
-    };
+    return  dispatch => {
+        dispatch({
+            type: actionTypes.RESET_ERROR,
+            error: error
+        })       
+    };       
 }
 
-export const resetPasswordSuccess = (email) => {
-    return {
+export const resetPasswordSuccess = (email) => dispatch => {
+    dispatch({
         type: actionTypes.RESET_SUCCESS,
         email: email
-    };
+    });
 };
 
 export const logout = () => {
@@ -93,15 +95,48 @@ export const setAuthRedirectPath = (path) => {
     };
 };
 
-export const resetPassword  = email => {
-return (dispatch) => {
-      firebase
-        .passwordReset(email)
-        .then(() =>
-          dispatch(resetPasswordSuccess(email))
-        )
-        .catch(err => {
-            dispatch(resetPasswordFail(err.response.data.error));
-        })
-     }  
-  };
+export const emptyErrorMsg  = () => {
+   return {
+       type: actionTypes.EMPTY_ERROR
+   }
+};
+
+// export const resetPassword  = (email, cl, errF) => {
+//     return (dispatch) => {
+//                 // console.log('email is verified')
+//             firebase
+//             .passwordReset(email)
+//             .then(response =>{
+//             dispatch(resetPasswordSuccess(email))
+            
+//             cl();
+//             console.log("action response",response);
+//             })
+//             .catch(err => {
+                
+//                 dispatch(resetPasswordFail(err));
+//                 if(errF) {
+//                     errF()
+//                 }
+//                 console.log("action",'email not verified');
+//             })
+        
+//          }  
+//       };
+// export const resetPassword  = (email) => {
+//     return (dispatch) => {
+//                 // console.log('email is verified')
+//             return firebase
+//             .passwordReset(email)
+//             .then(response => {
+//                 dispatch(resetPasswordSuccess(email));
+//                 return response;
+//             })
+//             .catch(err => {
+//                 console.log(err);
+//                 dispatch(resetPasswordFail(err));
+//                 throw new Error(err.message);
+//             })
+        
+//          }  
+//       };

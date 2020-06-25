@@ -90,7 +90,7 @@ class  Auth extends Component {
                             </Form.Text>
                         </Form.Group>
                         
-                        <div className={styles.div3}>
+                        <div className={styles.div3}>  
                            <Link to="/auth/reset">Forget Password?</Link>
                         </div>
                         <div className={styles.div2}>
@@ -118,7 +118,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg())
     };
 };
 

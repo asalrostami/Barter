@@ -9,7 +9,16 @@ import * as actions from '../../../store/actions/auth';
 
 
 class Signup extends Component {
+    componentDidMount() {
+        this.props.onEmptyErrorMsg();
+    }
+    emptyField = (e) => {
+        if(this.props.error) {
+
+        }
+    }
     render() {
+
         const SignupSchema = Yup.object().shape({
             email: Yup.string()
               .email('Invalid email')
@@ -23,10 +32,14 @@ class Signup extends Component {
             this.props.history.push('/');
          }
          let errorMessage = null;
+         let initialVals = { email: '', password: '' };
          if(this.props.error){
             errorMessage = (
                  <p>{this.props.error.message}</p>
             )
+            initialVals = { email: '', password: '' };
+            
+
         }
         return(
             <>
@@ -41,8 +54,9 @@ class Signup extends Component {
                  onSubmit={values => {
                      this.props.onAuth(values.email, values.password, true);
     
-                     alert("your registration has been successed")
-
+                     if(this.props.error) {
+                        // resetForm({values: ''})
+                    }
                     
                  }}
                  >
@@ -50,10 +64,12 @@ class Signup extends Component {
                      values,
                      errors,
                      touched,
+                     isValid,
                      handleChange,
                      handleBlur,
                      handleSubmit,
                      isSubmitting,
+                     resetForm,
                      /* and other goodies */
                  }) => (
          
@@ -88,7 +104,7 @@ class Signup extends Component {
                          </Form.Group>
                          
                          <div className={styles.div2}>
-                              <Button title="JOIN" type="submit" disabled={isSubmitting} />
+                              <Button title="JOIN" type="submit"  />
                          </div>
                     
                      </Form>
@@ -107,7 +123,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg())
     };
 };
 

@@ -46,6 +46,13 @@ const authLogout = (state, action) => {
     return updateObject(state, { token: null, userId: null, isAuthenticated: false});
 }
 
+const emptyError = (state, action) => {
+    return updateObject(state, {
+        error: null,
+        loading: false
+    });
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTH_START: return authStart(state, action);
@@ -54,6 +61,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
         case actionTypes.RESET_SUCCESS: return resetPassworsSuccess(state, action);
         case actionTypes.RESET_ERROR: return resetPassworsFail(state, action);
+        case actionTypes.EMPTY_ERROR: return emptyError(state, action);
         default:
             return state;
     }
