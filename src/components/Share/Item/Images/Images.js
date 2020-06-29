@@ -33,6 +33,7 @@ class Images extends Component {
             imagePreviewUrl: reader.result,
             imgURLList: list
           });
+          // callback function
           this.props.onGetImages(list);
         }
      

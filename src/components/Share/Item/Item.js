@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Row,Container, Col,Form,Image} from 'react-bootstrap';
+import {Row,Container, Col,Form} from 'react-bootstrap';
 import styles from './Item.module.css';
 import Button from '../Button/Button';
 import {checkValidity} from '../utility';

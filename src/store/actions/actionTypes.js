@@ -5,7 +5,8 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
-export const USER_SET = 'USER_SET';
+export const ITEM_SET_SUCCESS = 'ITEM_SET_SUCCESS';
+export const ITEM_SET_FAIL = 'ITEM_SET_FAIL';
 
 export const SHOW_MODEL = 'SHOW_MODEL';
 

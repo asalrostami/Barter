@@ -11,12 +11,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import authReducer from './store/reducers/auth';
-import userReducer from './store/reducers/user';
+import itemReducer from './store/reducers/item';
 
 
 const rootReducer = combineReducers({
    auth: authReducer,
-   user: userReducer
+   item: itemReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
