@@ -34,7 +34,9 @@ export const authenticate = (email, password, isSignup) => {
                         items : [],
                         requestedItems : []
                     }
-                    axios.post('/users.json?auth=' + response.data.localId, user)
+                    // debugger
+                    // axios.post('https://barter-5f642.firebaseio.com/users.json?auth=' + response.data.localId, user)
+                    axios.post('https://barter-5f642.firebaseio.com/users.json?', user)
                     .then(response => {
                         console.log("item added successfully",response)
                     })

@@ -7,6 +7,7 @@ export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
 export const ITEM_SET_SUCCESS = 'ITEM_SET_SUCCESS';
 export const ITEM_SET_FAIL = 'ITEM_SET_FAIL';
+export const ITEM_SET_START = 'ITEM_SET_START';
 
 export const SHOW_MODEL = 'SHOW_MODEL';
 

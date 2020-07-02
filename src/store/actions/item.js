@@ -1,5 +1,11 @@
 import * as actionTypes from './actionTypes';
 
+export const itemSetStart = () => {
+  
+    return {
+        type: actionTypes.ITEM_SET_START
+    };
+}; 
 export const itemSetSuccess = (userId,itemId,name) => {
     return {
         type: actionTypes.ITEM_SET_SUCCESS,
@@ -18,8 +24,8 @@ export const itemSetFail = (error) => {
 };
 
 export const itemSet = (userId) => {
-    return {
-        // type: actionTypes.ITEM_SET_SUCCESS
+    return { 
+        
     };
 };
 

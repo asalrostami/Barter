@@ -30,6 +30,9 @@
     margin-left: 20px;
 }
 
+.text_color {
+    color: red;
+}
 
 .font_title {
     font-weight: bold;

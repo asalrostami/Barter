@@ -2,127 +2,100 @@ import React,{Component} from 'react';
 import {Row,Container, Col,Form} from 'react-bootstrap';
 import styles from './Item.module.css';
 import Button from '../Button/Button';
-import {checkValidity} from '../utility';
 import Images from '../../Share/Item/Images/Images';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/auth';
 
 class Item extends Component {
      state = {
-         item: {
-             itemId:{
-                 elementType: 'label',
-                 name: 'ItemID',
-                 value: '',
-                 valid: false,
-                 required: true
+         item : {
+             title : {
+                 type:"text",
+                 name: "title",
+                 value: ''
              },
-             title: {
-                elementType: 'input',
-                name: 'ItemTitle',
-                value: '',
-                placeholder:'Title',
-                valid: false,
-                required: true
+             description : {
+                 type:"textarea",
+                name: "description",
+                value: ''
             },
-            description:  {
-                elementType: 'textarea',
-                name: 'ItemDesc',
-                value: '',
-                valid: false,
-                required: false
+            country : {
+                type:"text",
+                name: "country",
+                value: ''
             },
-             
-            country: {
-                elementType: 'input',
-                name: 'country',
-                value: '',
-                placeholder:'Country',
-                valid: false,
-                required: true
+            city : {
+                type:"text",
+                name: "city",
+                value: ''
             },
-            city: {
-                elementType: 'input',
-                name: 'city',
-                value: '',
-                placeholder:'City',
-                valid: false,
-                required: true
+            submitedDate : {
+                type:"text",
+                name: "submitedDate",
+                value: ''
             },
             
-             submitedDate:  {
-                elementType: 'plaintext',
-                name: 'SubmitedDate',
-                value: '',
-                valid: false,
-                required: true
+            lookingfor_title: {
+                type:"text",
+                name: "lookingfor_title",
+                value: ''
             },
-             lookingfor: {
-                 title:  {
-                    elementType: 'input',
-                    name: 'RequestedTitle',
-                    value: '',
-                    placeholder:'Title',
-                    valid: false,
-                    required: true
-                },
-                 description:  {
-                    elementType: 'textarea',
-                    name: 'RequestedDesc',
-                    value: '',
-                    valid: false,
-                    required: false
-                },
-             },
-             images:[],
-             forBarterSwitch:  {
-                elementType: 'switch',
-                name: 'ForBurterSwitch',
-                value: false,
-                required: false
-
+            lookingfor_description : {
+                type:"textarea",
+                name: "lookingfor_description",
+                value: ''
             },
-             status: {
-                elementType: 'label',
-                name: 'Status',
-                value: "Offered",
-                required: false
-               
+            forBarterSwitch: {
+                type:"switch",
+                name:"switch",
+                value : false
             },
+            images: [],
          },
-         
-        visible: false,
-        formIsValid: true,
-        addingItem: true,
-        
-      }
 
+        validated: false,
+        addingItem: true,  
+        formIsValid:true
+      }
+      componentDidMount(){
+          this.props.onEmptyErrorMsg();
+      }
+      setSubmitedDate = () => {
+          const today = this.getCurrentDate();
+          const item = {... this.state.item}
+          item.submitedDate.value = today
+          this.setState({item});
+      }
 
      getCurrentDate = () => {
         let today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
         const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = today.getFullYear();
-
         today = dd + '/' + mm + '/' + yyyy;
        return today;
     }
-    inputChangeHandler = (e) => {
-        const value = e.target.value;
-        // console.log("input value", value);
+    inputChangeHandler = (event , inputIdentifier) => {
+        const value = event.target.value;
+        const item = {... this.state.item};
+        item[inputIdentifier].value = value;
+        this.setState({item});    
     }
 
-    validityCheckHandler = (value, rules) =>{
-        const isValid = checkValidity(value,rules);
-        this.setState({formIsValid:isValid})
-    }
-    addItemHandler = () => {
-        if(this.state.addingItem){
-            let itemInfo = null;
-
+    addItemHandler = (event) => {
+        const form = event.currentTarget;
+        console.log("event" ,form);
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-       
-        // checkValidity 
+        this.setSubmitedDate();
+        this.setState({validated:true},() => {
+            console.log("final_ state", this.state)
+        });
 
-    }
+    };
+    
     modifyItemHandler = () => {
         // checkValidity 
 
@@ -135,58 +108,31 @@ class Item extends Component {
         this.props.history.goBack();
     }
     handleSwitchChange = () => {
-        const forBarter =this.state.item.forBarterSwitch 
-        for(let keys in forBarter){
+        const item = {... this.state.item}
+        for(let keys in item["forBarterSwitch"]){
             if(keys === "value"){
-                forBarter[keys] = !forBarter[keys] ;
+                item["forBarterSwitch"][keys] = !item["forBarterSwitch"][keys]
             }
         }
-        this.setState({forBarterSwitch:forBarter});
-        console.log("switchBarter", forBarter["value"]);
+         this.setState({item},() => {
+            console.log("switchBarter", this.state.item.forBarterSwitch.value);
+         });
+       
     }
     // callback function
     getImagesHandler = (images) => {
-        this.setState({images:images});
+        const item = {... this.state.item}
+        item["images"] = images
+        this.setState({item},() => {
+            console.log("images" , this.state.item.images);
+        });
     }
     render() {
         let errorLB = null;
         if(!this.state.formIsValid) {
             errorLB = ( <label className={styles.label}>Please enter the required information</label>)
         }
-        const button = (title, event) => {
-            return(<Col xs={3} sm={3} md={3} lg={3}>
-                <Button  title={title} clicked={event}/>
-                </Col>);
-        }
-
-        const formGroupText = (placeholder,value) => {
-            return ( <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                    <Form.Label className={styles.font_desc} column sm="3">{placeholder}</Form.Label>
-                    <Col sm="9">
-                    <Form.Control   type="text" value={value} placeholder={placeholder} onChange={this.inputChangeHandler} />
-                    </Col>
-                </Form.Group>    
-             );
-        }
-        const formGroupTextarea = () => {
-            return ( <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
-                    <Form.Label className={styles.font_desc} column sm="3">Descripton</Form.Label>
-                    <Col sm="9">
-                    <Form.Control  as="textarea" rows="3" />
-                    </Col>
-                </Form.Group>
-            );
-        }
-        const fromGroupPlainText = () => {
-            return(
-                <Form.Group as={Row} controlId="exampleForm.ControlInput1">
-                    <Form.Label className={styles.font_desc} column sm="4" md="4">Submited Date</Form.Label>
-                    <Col sm="8" md="8">
-                    <Form.Control plaintext readOnly defaultValue={this.getCurrentDate()} />
-                    </Col>
-                </Form.Group>
-            );
-        }
+    
         const itemElementsArray = [];
         for (let key in this.state.item) {
             itemElementsArray.push({
@@ -195,27 +141,114 @@ class Item extends Component {
             });
         }
         console.log("itemElementsArray" ,itemElementsArray )
+
         let itemForm = null;
         itemForm = (
-            <Form>
+            
+            <Form noValidate validated={this.state.validated}>
                     <Form.Label className={styles.font_title}>Item's Information :</Form.Label>
                     <div className={[styles.div ,styles.font_desc].join(' ')}>
-                        {formGroupText("Title")}
-                        {formGroupTextarea()}
-                        {formGroupText("Country")}
-                        {formGroupText("City")}
-                        {fromGroupPlainText()}
+                        {/* <Form.Group as={Row} controlId="exampleForm.ControlInput1"> */}
+                        <Form.Group as={Row} controlId="validationCustom01">
+                            <Form.Label className={styles.font_desc} column sm="3">Title</Form.Label>
+                            <Col sm="9">
+                                <Form.Control 
+                                required  
+                                type="text" 
+                                value={this.state.item.title.value} 
+                                placeholder="Title" 
+                                onChange={(event) => this.inputChangeHandler(event,"title")}
+                                />
+                            </Col>
+                            <Form.Control.Feedback type="invalid">
+                                Please choose a title.
+                            </Form.Control.Feedback>
+                         </Form.Group> 
+                         <Form.Group as={Row} controlId="exampleForm.ControlTextarea1">
+                            <Form.Label className={styles.font_desc} column sm="3">Descripton</Form.Label>
+                            <Col sm="9">
+                                <Form.Control  
+                                as="textarea" 
+                                value={this.state.item.description.value} 
+                                rows="3" 
+                                onChange={(event) => this.inputChangeHandler(event,"description")}/>
+                            </Col>
+                         </Form.Group>
+                         {/* <Form.Group as={Row} controlId="exampleForm.ControlInput1"> */}
+                         <Form.Group as={Row} controlId="validationCustom02">
+                            <Form.Label className={styles.font_desc} column sm="3">Country</Form.Label>
+                            <Col sm="9">
+                                 <Form.Control   
+                                 required
+                                 type="text" 
+                                 value={this.state.item.country.value} 
+                                 placeholder="Country" 
+                                 onChange={(event) => this.inputChangeHandler(event,"country")}
+                                 />
+                            </Col>
+                            <Form.Control.Feedback type="invalid">
+                                Please choose a country.
+                            </Form.Control.Feedback>
+                         </Form.Group> 
+                         {/* <Form.Group as={Row} controlId="exampleForm.ControlInput1"> */}
+                         <Form.Group as={Row} controlId="validationCustom03">
+                            <Form.Label className={styles.font_desc} column sm="3">City</Form.Label>
+                            <Col sm="9">
+                                 <Form.Control  
+                                 required 
+                                 type="text" 
+                                 value={this.state.item.city.value} 
+                                 placeholder="City" 
+                                 onChange={(event) => this.inputChangeHandler(event,"city")}
+                                 />
+                            </Col>
+                            <Form.Control.Feedback type="invalid">
+                                Please choose a city.
+                            </Form.Control.Feedback>
+                         </Form.Group> 
+                         <Form.Group as={Row} controlId="ControlInput1">
+                            <Form.Label className={styles.font_desc} column sm="4" md="4">Submited Date</Form.Label>
+                            <Col sm="8" md="8">
+                                 <Form.Control 
+                                 name="submitedDate"
+                                 plaintext 
+                                 readOnly 
+                                 defaultValue={this.getCurrentDate()} />
+                            </Col>
+                         </Form.Group>
                     </div>
                         <Form.Label  className={styles.font_title}>Looking for :</Form.Label>
                     <div className={[styles.div ,styles.font_desc].join(' ')}>
-                        {formGroupText("Title")}
-                        {formGroupTextarea()}
+                    {/* <Form.Group as={Row} controlId="exampleForm.ControlInput1"> */}
+                    <Form.Group as={Row} controlId="validationCustom04">
+                            <Form.Label className={styles.font_desc} column sm="3">Title</Form.Label>
+                            <Col sm="9">
+                                <Form.Control  
+                                required 
+                                type="text" 
+                                value={this.state.item.lookingfor_title.value} 
+                                placeholder="Title" 
+                                onChange={(event) => this.inputChangeHandler(event,"lookingfor_title")} 
+                                 />
+                            </Col>
+                            <Form.Control.Feedback type="invalid">
+                                Please choose a title.
+                            </Form.Control.Feedback>
+                         </Form.Group> 
+                         <Form.Group as={Row} controlId="ControlTextarea2">
+                            <Form.Label className={styles.font_desc} column sm="3">Descripton</Form.Label>
+                            <Col sm="9">
+                                <Form.Control  
+                                as="textarea" 
+                                value={this.state.item.lookingfor_description.value} 
+                                rows="3" 
+                                onChange={(event) => this.inputChangeHandler(event,"lookingfor_description")} />
+                            </Col>
+                         </Form.Group>
                     </div>
             </Form>
         );
         
-        
-    
         return(
             <Container className={styles.con} fluid="md">
                 <Row>
@@ -249,10 +282,18 @@ class Item extends Component {
                 </Col>
                 </Row >
                 <Row >
-                    {button("DELETE",this.deleteItemHandler)}
-                    {button("ADD",this.addItemHandler)}
-                    {button("MODIFY",this.modifyItemHandler)}
-                    {button("CANCLE",this.cancelItemHandler)}
+                    <Col xs={3} sm={3} md={3} lg={3}>
+                        <Button  title="CANCLE" clicked={this.cancelItemHandler}/>
+                    </Col>
+                    <Col xs={3} sm={3} md={3} lg={3}>
+                        <Button  title="ADD" type="submit" clicked={this.addItemHandler} />
+                     </Col>
+                     <Col xs={3} sm={3} md={3} lg={3}>
+                        <Button  title="MODIFY" clicked={this.modifyItemHandler}/>
+                    </Col>
+                    <Col xs={3} sm={3} md={3} lg={3}>
+                      <Button  title="DELETE" clicked={this.deleteItemHandler}/>
+                    </Col>
                 </Row>
             
         </Container>
@@ -261,5 +302,18 @@ class Item extends Component {
    }
 }
 
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+        isAuthenticated: state.auth.isAuthenticated
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg())
+    };
+};
 
-export default Item;
+
+export default connect(mapStateToProps,mapDispatchToProps)(Item);
