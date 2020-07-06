@@ -1,6 +1,4 @@
 import * as actionTypes from '../actions/actionTypes';
-import axios from '../../axios-items';
-import * as firebase from '../../Firebase/firebase';
 import {authenticate} from '../../api/authApi';
 
 export const authStart = () => {

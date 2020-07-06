@@ -4,16 +4,14 @@ import { updateObject } from '../../components/Share/utility';
 
 const initialState = {
     userId : null,
-    itemId : null,
-    name : null,
+    itemsId : [],
     error : null
 }
 
 const itemSetSuccess = (state, action) => {
     return updateObject(state, {
         userId : action.userId,
-        itemId : action.itemId,
-        name : action.name
+        itemsId : state.itemsId.concat(action.itemId)
     });
 }
 const itemSetFail = (state, action) => {
