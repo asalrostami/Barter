@@ -23,22 +23,38 @@ class Images extends Component {
         this.setState({
           selectedFile: event.target.files[0]
         })
+        const imgURL = URL.createObjectURL(event.target.files[0]);
+        console.log("image name", event.target.files[0].name);
         const index = Number(event.target.id);
-        let reader = new FileReader();
-         
-        reader.onloadend = () => {
-          const list = this.state.imgURLList;
-          list[index] = reader.result;
-          this.setState({
-            imagePreviewUrl: reader.result,
-            imgURLList: list
-          });
+
+        const list = this.state.imgURLList;
+        list[index] = event.target.files[0];
+        // list[index] = imgURL;
+        this.setState({
+                imagePreviewUrl: imgURL,
+                imgURLList: list
+              },() => {
+                console.log("imgURLList", this.state.imgURLList);
+              });
+       
           // callback function
           this.props.onGetImages(list);
-        }
+          
+      //   let reader = new FileReader();  
+      //   reader.onloadend = () => {
+      //     const list = this.state.imgURLList;
+      //     list[index] = reader.result;
+      //     console.log("reader.result", reader.result.name);
+      //     this.setState({
+      //       imagePreviewUrl: reader.result,
+      //       imgURLList: list
+      //     });
+      //     // callback function
+      //     this.props.onGetImages(list);
+      //   }
      
-       reader.readAsDataURL(event.target.files[0])
-        // console.log("reader url" , file);
+      //  reader.readAsDataURL(event.target.files[0])
+      //   // console.log("reader url" , file);
       }
 
       onChangeSubImageHandler = () => {
@@ -81,7 +97,10 @@ class Images extends Component {
       
     displayImageHandler = (index) => {
         const imgList = this.state.imgURLList;
-        this.setState({imagePreviewUrl: imgList[index]})
+        const imgURL = URL.createObjectURL(imgList[index]);
+        console.log("imgURL", imgURL);
+        this.setState({imagePreviewUrl: imgURL})
+        // this.setState({imagePreviewUrl: imgList[index]})
 
     }
     render(){
@@ -96,7 +115,7 @@ class Images extends Component {
                 </Col>
                 ) 
              : ( <Col className={styles.col} xs="4" sm="4" md="4" key={`${url} ${index}`}>
-                     <Image className={styles.image_sub} src={url}  
+                     <Image className={styles.image_sub} src={URL.createObjectURL(url)}  
                      onClick={() => this.displayImageHandler(index)} 
                     rounded 
                     /> 
