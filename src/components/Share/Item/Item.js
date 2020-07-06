@@ -4,7 +4,8 @@ import styles from './Item.module.css';
 import Button from '../Button/Button';
 import Images from '../../Share/Item/Images/Images';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/auth';
+import * as actions from '../../../store/actions/index';
+
 
 class Item extends Component {
      state = {
@@ -92,7 +93,10 @@ class Item extends Component {
         this.setSubmitedDate();
         this.setState({validated:true},() => {
             console.log("final_ state", this.state)
+
         });
+
+
 
     };
     
@@ -305,7 +309,9 @@ class Item extends Component {
 const mapStateToProps = state => {
     return {
         error: state.auth.error,
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        userId: state.item.userId,
+        itemId: state.item.itemsId
     };
 };
 const mapDispatchToProps = dispatch => {
