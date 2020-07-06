@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage'
 import { firebaseConfig } from './fbConfig';
 
 // Initialize Firebase
@@ -16,10 +17,9 @@ import { firebaseConfig } from './fbConfig';
  export const signOut = () => {
       return firebase.auth().signOut()
     };
-//  export const checkUserAuth = (user) => {
-//       return firebase.auth().onAuthStateChanged(user)
-//       // return firebase.auth().currentUser.emailVerified
-//     };
+export const storage = () => {
+  return firebase.storage();
+};
 export const checkUserAuth = () => {
   const isVarified = true;
   firebase.auth().onAuthStateChanged(authUser => {
