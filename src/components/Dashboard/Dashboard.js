@@ -1,17 +1,34 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Button from '../Share/Button/Button';
+import styles from './Dashboard.module.css';
+import {Container,Row,Col,Tabs,Tab} from 'react-bootstrap'
 
-const dashboard = (props) => {
-  const  addItemHandler = () => {
-        props.history.push('/dashboard/item');
+class  Dashboard extends Component {
+    state = {
+        key: 'myItems'
+    }
+    addItemHandler = () => {
+        this.props.history.push('/dashboard/item');
         
     }
-    return(
-        <div>
-            <h1>Dashboard</h1>
-            <Button title="Add New Item" clicked={addItemHandler} />
-        </div>
-    )
-};
+    render() {
+        return (
+            <Container fluid="md" className={styles.Cont}>
+                <Row >
+                    <h2>My Items</h2>
+                </Row>
+                <Row className={styles.textCenter}>
+                    <Button title="Add New Item" clicked={this.addItemHandler} />
+                </Row>
+                <Row>
+                    
 
-export default dashboard;
+                </Row>
+
+            </Container>
+
+        )
+    }
+} 
+
+export default Dashboard;

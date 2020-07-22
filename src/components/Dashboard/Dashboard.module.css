@@ -1,0 +1,11 @@
+.textCenter {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    /* border: 1px solid red; */
+}
+
+.Cont  {
+    margin-top: 20px;
+}

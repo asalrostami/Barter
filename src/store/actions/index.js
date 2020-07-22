@@ -6,5 +6,7 @@ export {
 } from './auth'
 
 export {
-    itemSet,
+    setItems,
+    addItems,
+    
 } from './item'

@@ -5,6 +5,10 @@ import Button from '../Button/Button';
 import Images from '../../Share/Item/Images/Images';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import {getItem,removeItemFromItems,removeImags,removeItemFromUsers} from '../../../api/itemApi';
+
+
+
 
 
 class Item extends Component {
@@ -52,14 +56,24 @@ class Item extends Component {
                 value : false
             },
             images: [],
+            itemId: null,
+            userId: null
          },
 
         validated: false,
         addingItem: true,  
-        formIsValid:true
+        formIsValid:true,
+        
       }
       componentDidMount(){
           this.props.onEmptyErrorMsg();
+          if(this.props.itemId){
+            const item = {...this.state.item};
+            item["itemId"] = this.props.itemId;
+            this.setState({item});
+            this.getItemHandler(this.props.itemId);
+          }
+          
       }
       setSubmitedDate = () => {
           const today = this.getCurrentDate();
@@ -83,7 +97,7 @@ class Item extends Component {
         this.setState({item});    
     }
 
-    addItemHandler = (event) => {
+    addItemHandler =  (event) => {
         const form = event.currentTarget;
         console.log("event" ,form);
         if (form.checkValidity() === false) {
@@ -91,22 +105,61 @@ class Item extends Component {
             event.stopPropagation();
         }
         this.setSubmitedDate();
-        this.setState({validated:true},() => {
-            console.log("final_ state", this.state)
+        this.setState({validated:true}, () => {
+            console.log("final_ state", this.state);
+            console.log("userId item", this.props.userId);
+            console.log("itemsId", this.props.itemsId);
+             this.props.onSetItems(this.state.item,this.props.userId,this.props.token);
+            //  this.props.onAddItems(this.props.itemsId,this.props.userId, this.props.token);
+             this.props.history.goBack();
 
         });
 
-
-
     };
+
+    getItemHandler = (itemId) => {
+        getItem(itemId)
+        .then(response => {
+            console.log("respone getItem",response);
+            this.setState((prevState) => {
+                return {
+                    item: { ...response, ...prevState.item }
+                }
+            })
+        })
+        .catch(error => {
+            console.log(error);   
+            throw new Error("error",error);
+        })
+    }
     
+
     modifyItemHandler = () => {
         // checkValidity 
 
 
     }
     deleteItemHandler = () => {
+        removeItemFromItems(this.state.item.itemId)
+        .then(res => {
+            console.log("remove item from item successfully",res)
+        }).catch(err => {
+            throw new Error(err.message)
+        })
 
+        removeItemFromUsers(this.state.item.itemId,this.state.item.userId)
+        .then(res => {
+            console.log("remove item from user successfully",res)
+        }).catch(err => {
+            throw new Error(err.message)
+        })
+
+        removeImags(this.state.item.images)
+        .then(res => {
+            console.log("remove images from storage successfully",res)
+        }).catch(err => {
+            throw new Error(err.message)
+        })
     }
     cancelItemHandler = () => {
         this.props.history.goBack();
@@ -310,14 +363,17 @@ const mapStateToProps = state => {
     return {
         error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated,
-        userId: state.item.userId,
-        itemId: state.item.itemsId
+        userId: state.auth.userId,
+        token: state.auth.token,
+        
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
-        onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg())
+        onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg()),
+        onSetItems:(item, userId,token) => dispatch(actions.setItems(item, userId, token)),
+        // onAddItems:(items, userId ,token) => dispatch(actions.addItems(items, userId, token))
     };
 };
 

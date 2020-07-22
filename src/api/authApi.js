@@ -26,6 +26,7 @@ export const authenticate = (email, password, isSignup) => {
     return  axios.post(url, authData)
             .then(response => {
                 console.log("responce AuthApi", response);
+                
                 if(isSignup){
                     // debugger
                     const user = {
@@ -34,17 +35,17 @@ export const authenticate = (email, password, isSignup) => {
                         items : [],
                         requestedItems : []
                     }
-                    // debugger
-                    // axios.post('https://barter-5f642.firebaseio.com/users.json?auth=' + response.data.localId, user)
-                    axios.post('https://barter-5f642.firebaseio.com/users.json?', user)
+                    axios.post('/users.json', user)
                     .then(response => {
                         console.log("item added successfully",response)
+                        // response.data.name
                     })
                     .catch(error => {
                         console.log(error.response.data.error);
                         throw new Error(error.response.data.error.message);
                     })
                 }
+
                 
                 return response;
             })
