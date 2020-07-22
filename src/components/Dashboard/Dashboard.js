@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import Button from '../Share/Button/Button';
+import Button from '../Share/Button/Button.addItem/Button_AddItem';
 import styles from './Dashboard.module.css';
-import {Container,Row,Col,Tabs,Tab} from 'react-bootstrap'
+import {Container,Row,Col} from 'react-bootstrap';
+import ItemsSummary from './ItemsSummary/ItemsSummary';
 
 class  Dashboard extends Component {
     state = {
@@ -14,15 +15,19 @@ class  Dashboard extends Component {
     render() {
         return (
             <Container fluid="md" className={styles.Cont}>
-                <Row >
-                    <h2>My Items</h2>
+                <Row  className={styles.font_title}>
+                    <p>My Items</p>
                 </Row>
                 <Row className={styles.textCenter}>
-                    <Button title="Add New Item" clicked={this.addItemHandler} />
+                    <Col xs={12} md={12} lg={12}>
+                        {/* <Button variant="warning" size="sm"  onClick={this.addItemHandler}>Add New Item</Button> */}
+                       <Button  title="Add New Item" clicked={this.addItemHandler} />
+                    </Col>
+                    
                 </Row>
                 <Row>
-                    
 
+                    <ItemsSummary />
                 </Row>
 
             </Container>

@@ -1,0 +1,25 @@
+.Content{
+    margin-bottom: 60px;
+    align-items: center;
+    margin-top: 10px;
+    /* border: 1px solid greenyellow; */
+}
+
+.row {
+    margin: 10px auto;
+    border: 1px solid black;
+   
+}
+
+
+@media (max-width: 992px) {
+   
+}
+@media (max-width: 768px) {
+    
+    
+}
+@media (max-width: 576px) {
+   
+   
+}

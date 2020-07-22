@@ -1,0 +1,32 @@
+.btn-warning {
+    background-color: #F7C212;
+    color: black; 
+}
+.btn-md {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 130px;
+    font-size: 1rem;
+  }
+  @media (max-width: 992px) {
+    .btn-md {
+        width: 130px;
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 768px) {
+    .btn-md {
+        width: 120px;
+        font-size: 0.8rem;
+    }
+    
+    
+}
+@media (max-width: 576px) {
+    .btn-md {
+        width: 100px;
+        font-size: 0.5rem;
+    }
+
+   
+}
