@@ -9,10 +9,11 @@ export const itemSetStart = () => {
         type: actionTypes.ITEM_SET_START
     };
 }; 
-export const itemSetSuccess = (itemId) => {
+export const itemSetSuccess = (itemId,isLoading) => {
     return {
         type: actionTypes.ITEM_SET_SUCCESS,
-        itemId : itemId       
+        itemId : itemId ,
+        isLoading : isLoading      
     };
 };
 
@@ -50,22 +51,12 @@ export const uploadImageFail = (error) => {
     };
 };
 
-// export const setItems =  (item,items, userId, token) => {
-//     let promises = [];
-//     promises.push(uploadImage(item.images));
-//     promises.push(addItem(item, userId,token));
-//     promises.push( addItemsToUser(items, userId,token));
-
-//     Promise.all(promises)
-//     .then(response => {
-//         for(let i in response)
-//         {
-
-//         }
-
-//     })
-
-// }
+export const setIsLoadingTrue =  (isLoading) => { 
+    return {
+        type: actionTypes.ISLOADING_TRUE,
+        isLoading: isLoading
+    };
+}
 
 
 export const setItems =  (item, userId, token) => {
@@ -130,7 +121,7 @@ export const setItems =  (item, userId, token) => {
 
                     
                     // console.log("response additem images",itemResult.config.data.images); 
-                    dispatch(itemSetSuccess(itemResult.data.name)) 
+                    dispatch(itemSetSuccess(itemResult.data.name,false));
 
                 }catch(error){
                     console.log("error setitem1",error);

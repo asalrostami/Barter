@@ -7,10 +7,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import {getItem,removeItemFromItems,removeImags,removeItemFromUsers} from '../../../api/itemApi';
 
-
-
-
-
 class Item extends Component {
      state = {
          item : {
@@ -75,6 +71,13 @@ class Item extends Component {
           }
           
       }
+      componentDidUpdate(preProps) {
+          if(this.props.isLoading !== preProps.isLoading) {
+              if(this.props.isLoading === false) {
+                this.props.history.goBack();
+              }
+          }
+      }
       setSubmitedDate = () => {
           const today = this.getCurrentDate();
           const item = {... this.state.item}
@@ -109,9 +112,11 @@ class Item extends Component {
             console.log("final_ state", this.state);
             console.log("userId item", this.props.userId);
             console.log("itemsId", this.props.itemsId);
+            // loading = true
+             this.props.onSetIsLoadingTrue(true);
              this.props.onSetItems(this.state.item,this.props.userId,this.props.token);
             //  this.props.onAddItems(this.props.itemsId,this.props.userId, this.props.token);
-             this.props.history.goBack();
+             
 
         });
 
@@ -365,6 +370,7 @@ const mapStateToProps = state => {
         isAuthenticated: state.auth.isAuthenticated,
         userId: state.auth.userId,
         token: state.auth.token,
+        isLoading : state.item.isLoading
         
     };
 };
@@ -373,7 +379,7 @@ const mapDispatchToProps = dispatch => {
         onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
         onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg()),
         onSetItems:(item, userId,token) => dispatch(actions.setItems(item, userId, token)),
-        // onAddItems:(items, userId ,token) => dispatch(actions.addItems(items, userId, token))
+        onSetIsLoadingTrue:(isLoading) => dispatch(actions.setIsLoadingTrue(isLoading))
     };
 };
 

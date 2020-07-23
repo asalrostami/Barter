@@ -103,7 +103,19 @@ export const getItem = (itemId) => {
     return axios.get('/items/' + itemId + '.json' )
     
 }
-
+export const getItemsByUserId = async (userId) => {
+    const quaryParams = '?orderBy="userId"&equalTo="' + userId + '"';
+    return await axios.get('/items.json' + quaryParams )
+    .then(response => {
+        return response;
+        // console.log("getItemsByUserId",error);
+    })
+    .catch(error => {
+        console.log("getItemsByUserId",error);
+        throw new Error(error.message);
+    })
+    
+}
 export const removeItemFromItems = (itemId) => {
     return axios.delete('items/' + itemId + '.json' );
 }

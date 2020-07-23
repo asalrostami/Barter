@@ -6,12 +6,20 @@ const initialState = {
     itemsId : null,
     imagesURL: [],
     error : null,
-    itemsAdded : false
+    itemsAdded : false,
+    isLoading : false
+}
+
+const setIsLoading = (state, action) => {
+    return updateObject(state, {
+        isLoading : action.isLoading
+    });
 }
 
 const itemSetSuccess = (state, action) => {
     return updateObject(state, {
-        itemsId : action.itemId
+        itemsId : action.itemId,
+        isLoading : action.isLoading
     });
 }
 const itemSetFail = (state, action) => {
@@ -51,6 +59,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPLOAD_IMAGE_ERROR: return uploadImageFail(state, action);
         case actionTypes.ADDITEM_TO_USER_SUCCESS: return addItemsToUserSuccess(state, action);
         case actionTypes.ADDITEM_TO_USER_ERROR: return addItemsToUserFail(state, action);
+        case actionTypes.ISLOADING_TRUE: return setIsLoading(state, action);
         default:
             return state;
     }

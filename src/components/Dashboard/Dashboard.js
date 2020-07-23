@@ -3,15 +3,38 @@ import Button from '../Share/Button/Button.addItem/Button_AddItem';
 import styles from './Dashboard.module.css';
 import {Container,Row,Col} from 'react-bootstrap';
 import ItemsSummary from './ItemsSummary/ItemsSummary';
+import {connect} from 'react-redux';
+import {getItemsByUserId} from '../../api/itemApi';
 
 class  Dashboard extends Component {
     state = {
-        key: 'myItems'
+        itemsList: []
+    }
+    componentDidMount() {
+        const items = [];
+        getItemsByUserId(this.props.userId)
+        .then(response => {
+            console.log("response get user dashboard", response);
+            for(let item in response.data){
+                items.push({
+                    ...response.data[item],
+                    itemId: item
+                });         
+            }
+            this.setState({itemsList: items}, () =>{
+                console.log("items in state", this.state.itemsList)
+            });
+
+        }).catch(err => {
+            console.log(err);
+            throw new Error(err.message);
+        })
     }
     addItemHandler = () => {
         this.props.history.push('/dashboard/item');
         
     }
+
     render() {
         return (
             <Container fluid="md" className={styles.Cont}>
@@ -26,8 +49,9 @@ class  Dashboard extends Component {
                     
                 </Row>
                 <Row>
-
-                    <ItemsSummary />
+                    <ItemsSummary 
+                    items={this.state.itemsList}
+                    />
                 </Row>
 
             </Container>
@@ -35,5 +59,17 @@ class  Dashboard extends Component {
         )
     }
 } 
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        userId: state.auth.userId
+    }
+};
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => {
+    return {
+        // onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
+    }   
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);

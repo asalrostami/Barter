@@ -69,6 +69,7 @@ export const auth = (email, password, isSignup) => {
         localStorage.setItem('token', response.data.idToken);
         localStorage.setItem('expirationDate', expirationDate);
         localStorage.setItem('userId', response.data.localId);
+        console.log("userId in action",response.data.localId);
         dispatch(authSuccess(response.data.idToken, response.data.localId, true));
         dispatch(checkAuthTimeout(response.data.expiresIn));
         

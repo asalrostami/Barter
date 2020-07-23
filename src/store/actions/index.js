@@ -8,5 +8,5 @@ export {
 export {
     setItems,
     addItems,
-    
+    setIsLoadingTrue
 } from './item'
