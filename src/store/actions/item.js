@@ -17,9 +17,27 @@ export const itemSetSuccess = (itemId,isLoading) => {
     };
 };
 
+
 export const itemSetFail = (error) => {
     return {
         type: actionTypes.ITEM_SET_FAIL,
+        error: error
+    };
+};
+
+export const getImageSuccess = (downloadedImgURL,fileName,isLoading) => {
+    return {
+        type: actionTypes.GETIMAGE_SUCCECC,
+        isLoading : isLoading ,
+        downloadedImgURL: downloadedImgURL,
+        fileName: fileName     
+    };
+};
+
+
+export const getImageFail = (error) => {
+    return {
+        type: actionTypes.GETIMAGE_FAIL,
         error: error
     };
 };
@@ -56,6 +74,26 @@ export const setIsLoadingTrue =  (isLoading) => {
         type: actionTypes.ISLOADING_TRUE,
         isLoading: isLoading
     };
+}
+
+export const getImage = (fileName) => {
+    return async dispatch => {
+        const ref = firebase.storage().ref('images').child(fileName);
+        await ref.getDownloadURL()
+        // firebase.storage().ref('images').child(fileName).getDownloadURL()
+        .then(response => {
+            console.log("responce of getImage",response);
+            dispatch(getImageSuccess(response,fileName,false));
+            return response;
+            
+        })
+        .catch(error => {
+            console.log("getImage",error);
+            dispatch(getImageFail(error));
+            throw new Error(error.message);
+        })
+    }
+   
 }
 
 

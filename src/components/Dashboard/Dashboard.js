@@ -14,12 +14,31 @@ class  Dashboard extends Component {
         const items = [];
         getItemsByUserId(this.props.userId)
         .then(response => {
-            console.log("response get user dashboard", response);
+            let isObject = false;
+            // console.log("response get user dashboard", response);
             for(let item in response.data){
-                items.push({
-                    ...response.data[item],
-                    itemId: item
-                });         
+                let imgArray = [];
+                // console.log("response.data[item].images", response.data[item].images)
+                if(!Array.isArray(response.data[item].images)){
+                    // console.log("______________");
+                    isObject = true;
+                    imgArray[Object.keys(response.data[item].images)] = Object.values(response.data[item].images)[0];    
+                }
+                // console.log("imgArray", imgArray);
+                if(isObject){
+                    items.push({
+                        ...response.data[item],
+                        itemId: item,
+                        images: imgArray
+                    }); 
+                }else{
+                    items.push({
+                        ...response.data[item],
+                        itemId: item,
+                    }); 
+
+                }
+                       
             }
             this.setState({itemsList: items}, () =>{
                 console.log("items in state", this.state.itemsList)

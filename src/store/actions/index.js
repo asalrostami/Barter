@@ -8,5 +8,6 @@ export {
 export {
     setItems,
     addItems,
-    setIsLoadingTrue
+    setIsLoadingTrue,
+    getImage
 } from './item'

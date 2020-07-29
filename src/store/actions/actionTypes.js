@@ -14,6 +14,10 @@ export const SHOW_MODEL = 'SHOW_MODEL';
 export const RESET_SUCCESS = "RESET_SUCCESS";
 export const RESET_ERROR = "RESET_ERROR";
 
+export const GETIMAGE_SUCCECC = "GETIMAGE_SUCCECC";
+export const GETIMAGE_FAIL = "GETIMAGE_FAIL";
+
+
 export const EMPTY_ERROR = "EMPTY_ERROR";
 
 export const ISLOADING_TRUE = "ISLOADING_TRUE";

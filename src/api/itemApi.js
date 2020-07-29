@@ -7,6 +7,7 @@ export const addItem = (item, userId,token) => {
     // debugger 
    
     const imgNames = {};
+    // debugger
     for(let i = 0; i < item.images.length; i++){
         if(item.images[i])
         {
@@ -16,6 +17,7 @@ export const addItem = (item, userId,token) => {
         }
        
     }
+
     const data = {
         userId: userId,
         title: item.title,
@@ -27,7 +29,7 @@ export const addItem = (item, userId,token) => {
         lookingfor_description: item.lookingfor_description,
         forBarterSwitch: item.forBarterSwitch,
         images: imgNames
-        // {"img1":"d.jpg","img2":"k.jpg"}
+        // {"0":"d.jpg",null,"2":"k.jpg"}
 
     }
     console.log("data in api",data);
@@ -72,8 +74,38 @@ export const addItemsToUser = async (itemId, userId,token) => {
     })
 
     
-
+    
 }
+// with bearer in header
+
+// export const getActiveCampaigns = () => {
+//     return (dispatch, getState) => {
+//         const bearer = 'Bearer ' + getState().login.bearer
+//         return axios.get(API.path + 'campaign/active/?website_id=' + getState().selectedWebsite.selectedWebsite + '&' + API.beaconAPI_client, { headers: { 'Authorization': bearer } })
+//         .then(function (response) {
+//             dispatch({
+//                 type: GET_ACTIVE_CAMPAIGNS,
+//                 activeCampaigns: response.data.response
+//             })
+//         })
+//       }
+//     }
+
+
+// export const getImage = async (fileName) => {
+//     // debugger
+//     const ref = firebase.storage().ref('images').child(fileName);
+//     await ref.getDownloadURL()
+//     // firebase.storage().ref('images').child(fileName).getDownloadURL()
+//     .then(response => {
+//         console.log("responce of getImage",response);
+//         return response;
+//     })
+//     .catch(error => {
+//         console.log("getImage",error);
+//         throw new Error(error.message);
+//     })
+// }
 
 
 export const uploadImage = (images) => {
