@@ -1,37 +1,85 @@
-import React from 'react';
-import image1 from '../../../../assets/Images/barter2.png';
+import React,{Component} from 'react';
+import img from '../../../../assets/Images/noPhoto.png';
 import {Card} from 'react-bootstrap';
 import styles from './Card.module.css';
 import CardDesc from './CardDesc/CardDesc';
 import Button from '../../../Share/Button/Button';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import * as actions from '../../../../store/actions/auth';
+import * as actions from '../../../../store/actions/index';
 
 
-const card = (props) => {
-  const confirmHandler = () => {
-    if(!props.isAuthenticated){
-      props.history.push('/auth');
+class CardItem extends Component {
+  state = {
+    finalImgUrl : this.props.downloadedImgURL
+}
+ componentDidMount() {
+  const url =  "";
+  console.log("image in card",this.props.image);
+  if(this.props.image){
+      this.props.onSetIsLoadingTrue(true);
+      this.props.onGetImage(this.props.image)
+      .then(response => {
+          console.log("response in card",response);
+      })   
+  }  
+ }
+
+ componentWillReceiveProps(nextProps) {
+  console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
+  console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
+  if(this.props.downloadedImgURL !== nextProps.downloadedImgURL) {
+      for(let obj of nextProps.downloadedImgURL){
+          console.log("obj in itemSummary",Object.keys(obj)[0])
+          if(this.props.image === Object.keys(obj)[0]){
+              this.setState({finalImgUrl:Object.values(obj)[0]});
+          }
+      }
+     
+  }else {
+      this.setState({finalImgUrl:img})
+  }
+}
+  confirmHandler = () => {
+    if(!this.props.isAuthenticated){
+      this.props.history.push('/auth');
     }else{
-      props.history.push('/desc');
+      this.props.history.push('/desc');
     }
   }
-    return (
-        <Card className={styles.padding}>
-          <Card.Img variant="top" src={image1}/>
+  render(){
+    return(
+      <Card className={styles.padding}>
+          <Card.Img variant="top" src={this.state.finalImgUrl}/>
           <Card.Body className="text-center">
-            <Card.Title>Card title</Card.Title>
-              <CardDesc />
-            <Button  title="I'm Interested" clicked={confirmHandler}/>
+            <Card.Title>{this.props.title}</Card.Title>
+              <CardDesc 
+               city={this.props.city}
+               submitedDate={this.props.submitedDate}
+               lookingfor={this.props.lookingfor}
+               forBarterSwitch={this.props.forBarterSwitch}
+               />
+            <Button  title="I'm Interested" clicked={this.confirmHandler}/>
           </Card.Body>
         </Card>
-    );
+    )
+  }
+
 }
+
 const mapStateToProps = state => {
   return {
-      isAuthenticated: state.auth.isAuthenticated
+      isAuthenticated: state.auth.isAuthenticated,
+      downloadedImgURL: state.item.downloadedImgURL
   };
 }
 
-export default withRouter(connect(mapStateToProps)(card));
+const mapDispatchToProps = dispatch => {
+  return {
+      onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg()),
+      onSetIsLoadingTrue:(isLoading) => dispatch(actions.setIsLoadingTrue(isLoading)),
+      onGetImage:(imgName) => dispatch(actions.getImage(imgName)),
+  };
+};
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CardItem));

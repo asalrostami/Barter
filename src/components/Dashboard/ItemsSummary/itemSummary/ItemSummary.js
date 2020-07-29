@@ -19,35 +19,10 @@ class ItemSummary extends Component {
             this.props.onGetImage(this.props.image)
             .then(response => {
                 console.log("response in itemSummary",response);
-            })
-            // console.log("isloading in componentDidMount" ,this.props.isLoading);
-            // console.log("url in itemSummary",url);
-            // this.setState({finalImgUrl:url});
-            // if(this.props.downloadedImgURL){
-            //     this.setState({finalImgUrl:this.props.downloadedImgURL});
-            // }
-           
+            })   
         }  
-        // }else {
-        //    this.setState({finalImgUrl:img})
-        // }
     }
     componentWillReceiveProps(nextProps) {
-        // const url = "";
-        // for(let obj of this.props.downloadedImgURL){
-
-           
-        //     console.log("this.props.image in for" ,this.props.image);
-        //     const realKey = ""
-        //      Object.keys(key).forEach((u,i)  => {
-        //          realKey = key[u];
-        //     })
-        //     console.log("key in for" ,realKey);
-        //     if(this.props.image === realKey){
-        //         url = Object.values(key);
-                
-        //     }
-        // }
         console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
         console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
         if(this.props.downloadedImgURL !== nextProps.downloadedImgURL) {
@@ -57,19 +32,12 @@ class ItemSummary extends Component {
                     this.setState({finalImgUrl:Object.values(obj)[0]});
                 }
             }
-            // this.setState({finalImgUrl:nextProps.downloadedImgURL});
            
         }else {
             this.setState({finalImgUrl:img})
         }
     }
-    // componentDidUpdate(preProps) {
-    //     if(this.props.isLoading !== preProps.isLoading) {
-    //         if(this.props.isLoading === false) {
-    //         //   this.props.history.goBack();
-    //         }
-    //     }
-    // }
+   
     render() {
         return(
             <Container className={styles.row}>

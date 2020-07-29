@@ -76,37 +76,10 @@ export const addItemsToUser = async (itemId, userId,token) => {
     
     
 }
-// with bearer in header
 
-// export const getActiveCampaigns = () => {
-//     return (dispatch, getState) => {
-//         const bearer = 'Bearer ' + getState().login.bearer
-//         return axios.get(API.path + 'campaign/active/?website_id=' + getState().selectedWebsite.selectedWebsite + '&' + API.beaconAPI_client, { headers: { 'Authorization': bearer } })
-//         .then(function (response) {
-//             dispatch({
-//                 type: GET_ACTIVE_CAMPAIGNS,
-//                 activeCampaigns: response.data.response
-//             })
-//         })
-//       }
-//     }
-
-
-// export const getImage = async (fileName) => {
-//     // debugger
-//     const ref = firebase.storage().ref('images').child(fileName);
-//     await ref.getDownloadURL()
-//     // firebase.storage().ref('images').child(fileName).getDownloadURL()
-//     .then(response => {
-//         console.log("responce of getImage",response);
-//         return response;
-//     })
-//     .catch(error => {
-//         console.log("getImage",error);
-//         throw new Error(error.message);
-//     })
-// }
-
+export const getAllItems = () => {
+    return axios.get('/items.json' ); 
+}
 
 export const uploadImage = (images) => {
     let promises = [];
@@ -176,4 +149,19 @@ export const removeImags = (images) => {
 
     
 }
+
+// with bearer in header
+
+// export const getActiveCampaigns = () => {
+//     return (dispatch, getState) => {
+//         const bearer = 'Bearer ' + getState().login.bearer
+//         return axios.get(API.path + 'campaign/active/?website_id=' + getState().selectedWebsite.selectedWebsite + '&' + API.beaconAPI_client, { headers: { 'Authorization': bearer } })
+//         .then(function (response) {
+//             dispatch({
+//                 type: GET_ACTIVE_CAMPAIGNS,
+//                 activeCampaigns: response.data.response
+//             })
+//         })
+//       }
+//     }
 

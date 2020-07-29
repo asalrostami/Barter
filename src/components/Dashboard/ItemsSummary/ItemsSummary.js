@@ -7,12 +7,6 @@ const itemsSummary = (props) => {
     const itemsList = props.items;
     const getValidImage = (images) => {
         let img = "";
-        // images.forEach((image,i) => {
-        //     if(image){
-        //         img = images[i];
-        //             break;
-        //     } 
-        // })
         for(let i = 0; i < images.length ; i++){
             console.log("images length",images.length )
             console.log("images in loop",images )
@@ -30,6 +24,7 @@ const itemsSummary = (props) => {
                 itemsList.map(item => {
                     const img = getValidImage(item.images);
                     console.log("img in ItemsSummary",img)
+                    
                     return (
                         <Row className={styles.row}>
                             <Col xs={12} md={12} lg={12}>

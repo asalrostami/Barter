@@ -18,7 +18,7 @@ class  Dashboard extends Component {
             // console.log("response get user dashboard", response);
             for(let item in response.data){
                 let imgArray = [];
-                // console.log("response.data[item].images", response.data[item].images)
+                // images is an object
                 if(!Array.isArray(response.data[item].images)){
                     // console.log("______________");
                     isObject = true;
