@@ -6,6 +6,7 @@ import Images from '../../Share/Item/Images/Images';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import {getItem,removeItemFromItems,removeImags,removeItemFromUsers} from '../../../api/itemApi';
+import * as moment from 'moment'
 
 class Item extends Component {
      state = {
@@ -86,11 +87,14 @@ class Item extends Component {
       }
 
      getCurrentDate = () => {
-        let today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
+        // let today = new Date();
+        // const dd = String(today.getDate()).padStart(2, '0');
+        // const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        // const yyyy = today.getFullYear();
+        // today = dd + '/' + mm + '/' + yyyy;
+         // today = yyyy + '-' + mm + '-' + dd;
+
+       const today = moment().format('L');
        return today;
     }
     inputChangeHandler = (event , inputIdentifier) => {

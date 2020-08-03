@@ -81,6 +81,10 @@ export const getAllItems = () => {
     return axios.get('/items.json' ); 
 }
 
+export const getItemByDropdownValue = (filterValue) =>{
+    
+}
+
 export const uploadImage = (images) => {
     let promises = [];
     // debugger

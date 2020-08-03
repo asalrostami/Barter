@@ -15,22 +15,24 @@ class CardItem extends Component {
 }
  componentDidMount() {
   const url =  "";
-  console.log("image in card",this.props.image);
+  // console.log("image in card",this.props.image);
   if(this.props.image){
       this.props.onSetIsLoadingTrue(true);
       this.props.onGetImage(this.props.image)
       .then(response => {
           console.log("response in card",response);
       })   
+  }else {
+    this.setState({finalImgUrl:img})
   }  
  }
 
  componentWillReceiveProps(nextProps) {
-  console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
-  console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
+  // console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
+  // console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
   if(this.props.downloadedImgURL !== nextProps.downloadedImgURL) {
       for(let obj of nextProps.downloadedImgURL){
-          console.log("obj in itemSummary",Object.keys(obj)[0])
+          // console.log("obj in itemSummary",Object.keys(obj)[0])
           if(this.props.image === Object.keys(obj)[0]){
               this.setState({finalImgUrl:Object.values(obj)[0]});
           }
@@ -50,7 +52,7 @@ class CardItem extends Component {
   render(){
     return(
       <Card className={styles.padding}>
-          <Card.Img variant="top" src={this.state.finalImgUrl}/>
+          <Card.Img variant="top" src={this.state.finalImgUrl} className={styles.img}/>
           <Card.Body className="text-center">
             <Card.Title>{this.props.title}</Card.Title>
               <CardDesc 

@@ -13,7 +13,7 @@ class ItemSummary extends Component {
    }
     componentDidMount() {
         const url =  "";
-        console.log("image in itemSummary",this.props.image);
+        // console.log("image in itemSummary",this.props.image);
         if(this.props.image){
             this.props.onSetIsLoadingTrue(true);
             this.props.onGetImage(this.props.image)
@@ -23,11 +23,11 @@ class ItemSummary extends Component {
         }  
     }
     componentWillReceiveProps(nextProps) {
-        console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
-        console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
+        // console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
+        // console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
         if(this.props.downloadedImgURL !== nextProps.downloadedImgURL) {
             for(let obj of nextProps.downloadedImgURL){
-                console.log("obj in itemSummary",Object.keys(obj)[0])
+                // console.log("obj in itemSummary",Object.keys(obj)[0])
                 if(this.props.image === Object.keys(obj)[0]){
                     this.setState({finalImgUrl:Object.values(obj)[0]});
                 }
@@ -80,50 +80,6 @@ class ItemSummary extends Component {
          }
     }
                                 
-    
-
-
-
-// const itemSummary = (props) => (
-//     <Container className={styles.row}>
-//         <Row >
-//             <Col xs={3} md={3} lg={3} className={styles.col}>
-//                 <img className={styles.image}  src={img} alt="image" />
-//             </Col>
-//             <Col xs={6} md={6} lg={6} className={styles.font}>
-//                 <Row as={Row}>
-//                     <label className={styles.title}>Title : </label>
-//                     <label className={styles.title}>{props.title}</label>
-//                 </Row>
-//                 <Row as={Row}>
-//                     <label className={styles.title}>Title : </label>
-//                     <label className={styles.title}>{props.submitedDate}</label>
-//                 </Row>
-//             </Col>
-//             <Col xs={3} md={3} lg={3} >
-//                 <Row>
-//                     <Col className={styles.col_center}>
-//                         { props.forBarterSwitch 
-//                         ? <label className={styles.font,styles.font_color}>For Barter</label>
-//                         :  <label className={styles.font,styles.font_color}>----</label>
-//                         }
-//                         {/* <label className={styles.font,styles.font_color} id={props.forBarterSwitch ? 'msg' : null}>For Barter</label> */}
-//                     </Col>
-                    
-//                 </Row>
-//                 <Row className={styles.btn}>
-//                     <Col className={styles.col_center}>
-//                         <Button title="Modify"></Button>
-//                     </Col>
-                
-//                 </Row>
-//             </Col>
-//         </Row>
-//     </Container>      
-// )
-
-// export default itemSummary;
-
 const mapStateToProps = state => {
     return {
         error: state.auth.error,

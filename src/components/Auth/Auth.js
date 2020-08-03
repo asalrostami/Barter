@@ -9,6 +9,14 @@ import * as actions from '../../store/actions/auth';
 import { Link } from "react-router-dom";
 
 class  Auth extends Component {
+
+     loginHandler = () => {
+        console.log("error in auth",this.props.error);
+        if(!this.props.error){
+            // this.props.history.push('/');
+
+        }
+    }
     render() {
         const LoginSchema = Yup.object().shape({
             email: Yup.string()
@@ -19,14 +27,8 @@ class  Auth extends Component {
               .max(9, 'Too Long!')
               .required('Required')    
           });
-          const handleChange = () => {
-            
-          }
-         
-          console.log("auth",this.props.isAuthenticated);
 
-          let errorMessage = null;
-
+        let errorMessage = null;
         if(this.props.error){
             errorMessage = (
                  <p>{this.props.error.message}</p>
@@ -94,7 +96,7 @@ class  Auth extends Component {
                            <Link to="/auth/reset">Forget Password?</Link>
                         </div>
                         <div className={styles.div2}>
-                             <Button title="LOGIN" type="submit"/>
+                             <Button title="LOGIN" type="submit" clicked={this.loginHandler}/>
                         </div>
                         <div className={styles.div2} style={{marginTop: "50px"}}>
                              <p>Don't have an account?<Link to={"/auth/signup"}>SignUp</Link></p>
