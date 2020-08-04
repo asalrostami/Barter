@@ -16,45 +16,84 @@ class Home extends Component  {
         })
     }
 
-    convertFormetDate = (date) => {
-       const dateDay  = date.slice(0,2);
-        const dateMonth = date.slice(3,5);
-        const dateYear = date.slice(6,10) 
-        const convertedDate = dateYear + '-' + dateMonth + '-' + dateDay;
-       return convertedDate;
-    }
-    getLastMonthFirstDate = () => {
-        let today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth()).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
-        // today = yyyy + '-' + mm + '-' + dd;
-       return today;
-    }
-
-    getLastWeekDate = () => {
-        let today = new Date();
-        let dd = String(today.getDate() - 7).padStart(2, '0');
-        if(dd < 0){
-            dd = String(today.getDate() - 7).padStart(2, '0');
+    getLastMonthItems = () => {
+      const allItems = this.state.itemsList;
+      const filteredItems = [];
+      console.log("AllItems in home", allItems);
+      for(let item of Object.keys(allItems)){
+        const submitedDate = allItems[item].submitedDate.value;
+        console.log("submitedDate in getLastMonthItems", submitedDate);
+        const diffDays = this.getDifferenceInDays(submitedDate);
+        if(diffDays <= 30) {
+            filteredItems.push(allItems[item]);
         }
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
-        // today = yyyy + '-' + mm + '-' + dd;
-       return today;
+
+      } 
+        console.log("=========Items in filteredItems", filteredItems);
+        return filteredItems;
     }
 
-    getCurrentDate = () => {
-        let today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
-        // today = yyyy + '-' + mm + '-' + dd;
-       return today;
+    getLastWeekItems = () => {
+        const allItems = this.state.itemsList;
+        const filteredItems = [];
+        console.log("AllItems in home", allItems);
+        for(let item of Object.keys(allItems)){
+          const submitedDate = allItems[item].submitedDate.value;
+          console.log("submitedDate in getLastWeekItems", submitedDate);
+          const diffDays = this.getDifferenceInDays(submitedDate);
+          if(diffDays <= 7) {
+              filteredItems.push(allItems[item]);
+          }
+  
+        } 
+          console.log("############Items in filteredItems", filteredItems);
+          return filteredItems;
     }
+
+    getAllItems = () => {
+        const allItems = this.state.itemsList;
+        const filteredItems = [];
+        console.log("AllItems in home", allItems);
+        for(let item of Object.keys(allItems)){
+           filteredItems.push(allItems[item])
+        } 
+          console.log("%%%%%%%%%Items in filteredItems", filteredItems);
+          return filteredItems;
+    }
+
+    getDifferenceInDays = (submitedDate) => {
+        const today = new Date( moment().format('L') );
+        const convertedSubmitedDate = new Date (submitedDate);
+        const diff = Math.abs(today - convertedSubmitedDate); //in milliseconds
+        const diffDays = 0|diff/864e5;
+       return diffDays;
+    }
+
+    componentDidUpdate(prevProps,prevState) {
+        if (this.state.dropDownValue !== prevState.dropDownValue) {
+            if(this.state.dropDownValue){
+                switch(this.state.dropDownValue) {
+                    case ('All Items') :
+                        const All = this.getAllItems();
+                        this.setState({itemsList:All});
+                        break;
+                    case ('Last Month') :
+                        const lastMonthday = this.getLastMonthItems();
+                        this.setState({itemsList:lastMonthday});
+                        break;
+                    case ('Last Week') :  
+                       const lastWeekday = this.getLastWeekItems();
+                        this.setState({itemsList:lastWeekday});
+                        break;
+                    default:
+                        const AllDefault = this.getAllItems();
+                        this.setState({itemsList:AllDefault});
+                }
+            } 
+           
+        }
+    }
+   
     componentDidMount() {
         const items = []
         getAllItems()
@@ -65,8 +104,6 @@ class Home extends Component  {
                 let imgArray = [];
                 let isObject = false;
                 // images is an object
-                console.log("images in home", response.data[item].images);
-                // debugger
                 if(response.data[item].images)
                 {
                     if(!Array.isArray(response.data[item].images)){
@@ -94,10 +131,7 @@ class Home extends Component  {
                         itemId: item,
                         images: []
                     }); 
-                }
-               
-                console.log("______________",items );
-                       
+                }             
             }
             this.setState({itemsList: items}, () =>{
                 console.log("items in home's state", this.state.itemsList)
@@ -109,50 +143,6 @@ class Home extends Component  {
         })
     }
     render() {
-
-        if(this.state.dropDownValue){
-            switch(this.state.dropDownValue) {
-                case ('All Items') :
-                    //  getAllItems();
-                    break;
-                case ('Last Month') :
-                    // mmm
-                    break;
-                case ('Last Week') :
-                    // kk
-                    break;
-                default:
-                    // 
-            }
-        }
-
-        
-        // console.log("LastMonthFirstDate()",this.getLastMonthFirstDate());
-        // console.log("this.getLastWeekDate()",this.getLastWeekDate());
-        // const lastWeekwithfunc = this.getLastWeekDate();
-
-        // const currentdate = new Date (this.getCurrentDate());
-        // const lastWeek = moment().subtract(7, 'days').calendar();
-        // const lastMonth = moment().subtract(1, 'months').calendar();
-        // console.log("lastWeek with moment" , lastWeek);
-        // console.log("lastMonth with moment" , lastMonth);
-        // const diff2 = Math.abs(currentdate-lastWeek); //in milliseconds
-        // const diffDays = 0|diff2/864e5;
-        // console.log("diff2" , diff2)
-        // console.log("diffDays" , diffDays);
-
-        // const day = Date.parse(currentdate);
-        // console.log("current date",currentdate);
-        // const lastWeek = Date.parse(this.getLastWeekDate());
-        // let d = ""
-        // if(lastWeek <= day){
-        //     d = true;
-        //     console.log("d" , d)
-        // }
-        // console.log("day" , day)
-        // console.log("last week date",lastWeek);
-        // console.log("difference time", day - lastWeek);
-
         return(
             <>
                

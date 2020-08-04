@@ -6,7 +6,7 @@ import styles from './Cards.module.css';
 
 const cards = (props) => {
     const itemsList = props.items;
-    console.log("items in cards",itemsList);
+    // console.log("items in cards",itemsList);
     const getValidImage = (images) => {
         // debugger
         let img = "";
@@ -27,10 +27,6 @@ const cards = (props) => {
                 {
                     itemsList.map(item => {
                         let img = null
-                        console.log("images",item.images);
-                        console.log("images length",item.images.length);
-
-                       
                         if(item.images.length !== 0){
                             img = getValidImage(item.images);
                         }
