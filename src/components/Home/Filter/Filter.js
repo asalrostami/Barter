@@ -5,14 +5,20 @@ import styles from './Filter.module.css';
 
 class Filter extends Component  {
     state = {
-        timePeriod: ""
+        filterValue: ""
     }
     handleInputChange = (event) => {
-        this.setState({timePeriod : event.target.value}, () => {
-            console.log("timePeriod in filter",this.state.timePeriod);
+        this.setState({filterValue : event.target.value}, () => {
+            console.log("filterValue in filter",this.state.filterValue);
         });
-        this.props.onChangeValue(event.target.value);
+       
         
+    }
+    handleDropdownChange = (event) => {
+        this.props.onChangeValue(event.target.value);
+    }
+    searchBtnHandler = () => {
+        this.props.onChangeValue(this.state.filterValue);
     }
     render(){
         
@@ -25,12 +31,13 @@ class Filter extends Component  {
                             <InputGroup className="mb-3">
                                 <FormControl
                                 className={`mr-sm-2 ${styles.numeral}`}
-                                placeholder="Search"
+                                placeholder="Enter Item Name"
                                 aria-label="Search"
                                 aria-describedby="basic-addon2"
+                                onChange={this.handleInputChange}
                                 />
                                 <InputGroup.Append>
-                                   <Button className={styles.numeral}  variant="outline-warning">Search</Button>
+                                   <Button className={styles.numeral}  variant="outline-warning" onClick={this.searchBtnHandler}>Search</Button>
                                 </InputGroup.Append>
                             </InputGroup>
 
@@ -40,7 +47,7 @@ class Filter extends Component  {
                         <Col xs={5} md={4}>
                             <Form>
                             <Form.Group controlId="exampleForm.ControlSelect1">
-                                <Form.Control className={styles.numeral} as="select" onChange={this.handleInputChange}>
+                                <Form.Control className={styles.numeral} as="select" onChange={this.handleDropdownChange}>
                                 <option>All Items</option>
                                 <option>Last Week</option>
                                 <option>Last Month</option>

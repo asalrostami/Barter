@@ -7,17 +7,18 @@ import * as moment from 'moment'
 class Home extends Component  {
     state = {
         itemsList: [],
-        dropDownValue: null
+        filterdItemsList: [],
+        filterValue: ''
     }
 
-    searchDropDownHandler = (dropDownValue) =>{
-        this.setState({dropDownValue : dropDownValue},() =>{
-            console.log("dropDownValue in home",this.state.dropDownValue);
+    searchDropDownHandler = (filterValue) =>{
+        this.setState({filterValue : filterValue},() => {
+            console.log("dropDownValue in home",this.state.filterValue);
         })
     }
 
     getLastMonthItems = () => {
-      const allItems = this.state.itemsList;
+      const allItems =  {...this.state.itemsList};
       const filteredItems = [];
       console.log("AllItems in home", allItems);
       for(let item of Object.keys(allItems)){
@@ -34,7 +35,7 @@ class Home extends Component  {
     }
 
     getLastWeekItems = () => {
-        const allItems = this.state.itemsList;
+        const allItems =  {...this.state.itemsList};
         const filteredItems = [];
         console.log("AllItems in home", allItems);
         for(let item of Object.keys(allItems)){
@@ -50,14 +51,27 @@ class Home extends Component  {
           return filteredItems;
     }
 
-    getAllItems = () => {
-        const allItems = this.state.itemsList;
+    getAll = () => {
+        const allItems = {...this.state.itemsList};
         const filteredItems = [];
         console.log("AllItems in home", allItems);
         for(let item of Object.keys(allItems)){
            filteredItems.push(allItems[item])
         } 
           console.log("%%%%%%%%%Items in filteredItems", filteredItems);
+          return filteredItems;
+    }
+    getItemByName = (filter) => {
+        const allItems =  {...this.state.itemsList};
+        const filteredItems = [];
+        console.log("AllItems in home", allItems);
+        for(let item of Object.keys(allItems)){
+            if(allItems[item].title.value === filter){
+                filteredItems.push(allItems[item])
+            }
+           
+        } 
+          console.log("*******Item in filteredItems", filteredItems);
           return filteredItems;
     }
 
@@ -70,29 +84,33 @@ class Home extends Component  {
     }
 
     componentDidUpdate(prevProps,prevState) {
-        if (this.state.dropDownValue !== prevState.dropDownValue) {
-            if(this.state.dropDownValue){
-                switch(this.state.dropDownValue) {
+        if (this.state.filterValue !== prevState.filterValue) {
+            if(this.state.filterValue){
+                switch(this.state.filterValue) {
                     case ('All Items') :
-                        const All = this.getAllItems();
-                        this.setState({itemsList:All});
+                        const All = this.getAll();
+                        this.setState({filterdItemsList:All});
                         break;
                     case ('Last Month') :
                         const lastMonthday = this.getLastMonthItems();
-                        this.setState({itemsList:lastMonthday});
+                        this.setState({filterdItemsList:lastMonthday});
                         break;
                     case ('Last Week') :  
                        const lastWeekday = this.getLastWeekItems();
-                        this.setState({itemsList:lastWeekday});
+                        this.setState({filterdItemsList:lastWeekday});
                         break;
                     default:
-                        const AllDefault = this.getAllItems();
-                        this.setState({itemsList:AllDefault});
+                        const item = this.getItemByName(this.state.filterValue);
+                        this.setState({filterdItemsList:item});
                 }
-            } 
+            } else{
+                const AllItems = this.getAll();
+                this.setState({filterdItemsList: AllItems});
+            }
            
         }
     }
+   
    
     componentDidMount() {
         const items = []
@@ -133,7 +151,7 @@ class Home extends Component  {
                     }); 
                 }             
             }
-            this.setState({itemsList: items}, () =>{
+            this.setState({itemsList: items, filterdItemsList: items}, () =>{
                 console.log("items in home's state", this.state.itemsList)
             });
 
@@ -149,7 +167,7 @@ class Home extends Component  {
                <Filter 
                onChangeValue={this.searchDropDownHandler}/>
                <Cards 
-               items={this.state.itemsList}/>    
+               items={this.state.filterdItemsList}/>    
             </>
         )
     }
