@@ -39,22 +39,6 @@ class Images extends Component {
        
           // callback function
           this.props.onGetImages(list);
-          
-      //   let reader = new FileReader();  
-      //   reader.onloadend = () => {
-      //     const list = this.state.imgURLList;
-      //     list[index] = reader.result;
-      //     console.log("reader.result", reader.result.name);
-      //     this.setState({
-      //       imagePreviewUrl: reader.result,
-      //       imgURLList: list
-      //     });
-      //     // callback function
-      //     this.props.onGetImages(list);
-      //   }
-     
-      //  reader.readAsDataURL(event.target.files[0])
-      //   // console.log("reader url" , file);
       }
 
       onChangeSubImageHandler = () => {
@@ -65,30 +49,30 @@ class Images extends Component {
         this.setState({showModel: false})
       }
       deleteImageHandler = () => {
-        const selectedURL = this.state.imagePreviewUrl;
-        const list = this.state.imgURLList
+        // const selectedURL = this.state.imagePreviewUrl;
+        const selectedURL = this.state.selectedFile;
+        const list = this.state.imgURLList 
         const selectedURLIndex = list.indexOf(selectedURL);
+       
+        console.log("selectedURLIndex delete",selectedURLIndex)
         if(selectedURLIndex > -1) {
             list.splice(selectedURLIndex, 1, null);
         }
+        
         let imgPreviewSet = null;
          list.map((url) => {
           if(url !== null) {
-             imgPreviewSet = url;
+            //  imgPreviewSet = url;
+            imgPreviewSet = URL.createObjectURL(url)
           }
         })
+        console.log("list after delete",list)
         this.setState({imgURLList:list,imagePreviewUrl:imgPreviewSet }
         , this.togglePopup)
       }
       onClickHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
-    //     axios.post("http://localhost:8000/upload", data, { 
-    //        // receive two    parameter endpoint url ,form data
-    //    })
-    //  .then(res => { // then print response status
-    //      console.log(res.statusText)
-    //   })
      }
 
      togglePopup = () => {  
@@ -99,7 +83,7 @@ class Images extends Component {
         const imgList = this.state.imgURLList;
         const imgURL = URL.createObjectURL(imgList[index]);
         console.log("imgURL", imgURL);
-        this.setState({imagePreviewUrl: imgURL})
+        this.setState({imagePreviewUrl: imgURL,selectedFile:imgList[index]})
         // this.setState({imagePreviewUrl: imgList[index]})
 
     }
