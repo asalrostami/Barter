@@ -5,9 +5,11 @@ import { updateObject } from '../../components/Share/utility';
 const initialState = {
     token: null,
     userId: null,
+    // userId: "evPNR3BsmxV7xIQmNQfa5Lln3Kd2",
     error: null,
     loadind: false,
     isAuthenticated: false,
+    // isAuthenticated: true,
     authRedirectPath: '/',
     email: null
 }
@@ -53,7 +55,7 @@ const emptyError = (state, action) => {
     });
 }
 
-const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
@@ -66,5 +68,3 @@ const reducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export default reducer;

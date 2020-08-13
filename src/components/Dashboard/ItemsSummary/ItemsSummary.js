@@ -26,11 +26,11 @@ const itemsSummary = (props) => {
                     // console.log("img in ItemsSummary",img)
                     
                     return (
-                        <Row className={styles.row}>
+                        <Row className={styles.row}
+                        key={item.itemId}>
                             <Col xs={12} md={12} lg={12}>
                                 <Item 
-                                key={item.itemId}
-                                // image={item.images[0]}
+                                  // image={item.images[0]}
                                 image={img}
                                 title={item.title.value}
                                 submitedDate={item.submitedDate.value}

@@ -33,9 +33,9 @@ const cards = (props) => {
                        
                         // console.log("img in ItemsSummary",img)
                         return (
-                            <Col xs={12} sm={6} md={6} lg={3}>
+                            <Col xs={12} sm={6} md={6} lg={3} 
+                            key={`Cards-${item.itemId}`}>
                                 <Card  
-                                 key={item.itemId}
                                  image={img}
                                  title={item.title.value}
                                  city={item.city.value}

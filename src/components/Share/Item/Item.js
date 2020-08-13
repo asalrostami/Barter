@@ -1,62 +1,18 @@
 import React,{Component} from 'react';
+import { connect } from 'react-redux';
+import * as moment from 'moment'
 import {Row,Container, Col,Form} from 'react-bootstrap';
-import styles from './Item.module.css';
+
 import Button from '../Button/Button';
 import Images from '../../Share/Item/Images/Images';
-import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import {getItem,removeItemFromItems,removeImags,removeItemFromUsers} from '../../../api/itemApi';
-import * as moment from 'moment'
+import defaultItem from './utils/defaultItem';
+import styles from './Item.module.css';
 
 class Item extends Component {
      state = {
-         item : {
-             title : {
-                 type:"text",
-                 name: "title",
-                 value: ''
-             },
-             description : {
-                 type:"textarea",
-                name: "description",
-                value: ''
-            },
-            country : {
-                type:"text",
-                name: "country",
-                value: ''
-            },
-            city : {
-                type:"text",
-                name: "city",
-                value: ''
-            },
-            submitedDate : {
-                type:"text",
-                name: "submitedDate",
-                value: ''
-            },
-            
-            lookingfor_title: {
-                type:"text",
-                name: "lookingfor_title",
-                value: ''
-            },
-            lookingfor_description : {
-                type:"textarea",
-                name: "lookingfor_description",
-                value: ''
-            },
-            forBarterSwitch: {
-                type:"switch",
-                name:"switch",
-                value : false
-            },
-            images: [],
-            itemId: null,
-            userId: null
-         },
-
+         item : null,
         validated: false,
         addingItem: true,  
         formIsValid:true,
@@ -65,10 +21,12 @@ class Item extends Component {
       componentDidMount(){
           this.props.onEmptyErrorMsg();
           if(this.props.itemId){
-            const item = {...this.state.item};
-            item["itemId"] = this.props.itemId;
-            this.setState({item});
-            this.getItemHandler(this.props.itemId);
+            // this.getItemHandler(this.props.itemId);
+          } else {
+              const item = {...defaultItem};
+              const today = this.getCurrentDate();
+              item.submitedDate.value = today
+              this.setState({item});      
           }
           
       }
@@ -79,21 +37,14 @@ class Item extends Component {
               }
           }
       }
-      setSubmitedDate = () => {
-          const today = this.getCurrentDate();
-          const item = {... this.state.item}
-          item.submitedDate.value = today
-          this.setState({item});
-      }
+    //   setSubmitedDate = () => {
+    //       const today = this.getCurrentDate();
+    //       const item = {... this.state.item}
+    //       item.submitedDate.value = today
+    //       this.setState({item});
+    //   }
 
      getCurrentDate = () => {
-        // let today = new Date();
-        // const dd = String(today.getDate()).padStart(2, '0');
-        // const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        // const yyyy = today.getFullYear();
-        // today = dd + '/' + mm + '/' + yyyy;
-         // today = yyyy + '-' + mm + '-' + dd;
-
        const today = moment().format('L');
        return today;
     }
@@ -105,36 +56,38 @@ class Item extends Component {
     }
 
     addItemHandler =  (event) => {
+        
+        event.preventDefault();
+        event.stopPropagation();
+        // debugger
         const form = event.currentTarget;
-        console.log("event" ,form);
+        console.log("form" ,form);
+        console.log("form.checkValidity()" ,form.checkValidity());
+        // debugger
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-        }
-        this.setSubmitedDate();
-        this.setState({validated:true}, () => {
+            console.log("@@@@@@@@@@@@@@@@@@Failed");
+                
+        
+        }else{
+            // debugger
+            // this.setSubmitedDate();
+            
             console.log("final_ state", this.state);
             console.log("userId item", this.props.userId);
             console.log("itemsId", this.props.itemsId);
-            // loading = true
-             this.props.onSetIsLoadingTrue(true);
-             this.props.onSetItems(this.state.item,this.props.userId,this.props.token);
-            //  this.props.onAddItems(this.props.itemsId,this.props.userId, this.props.token);
-             
-
-        });
-
+            
+            this.props.onSetIsLoadingTrue(true);
+            this.props.onSetItems(this.state.item,this.props.userId,this.props.token);    
+        } 
     };
 
     getItemHandler = (itemId) => {
         getItem(itemId)
         .then(response => {
             console.log("respone getItem",response);
-            this.setState((prevState) => {
-                return {
-                    item: { ...response, ...prevState.item }
-                }
-            })
+            this.setState({ item: response });
         })
         .catch(error => {
             console.log(error);   
@@ -196,16 +149,20 @@ class Item extends Component {
         });
     }
     render() {
+        const { item, formIsValid } = this.state;
+        
+        if(!item) return null;
+
         let errorLB = null;
-        if(!this.state.formIsValid) {
+        if(!formIsValid) {
             errorLB = ( <label className={styles.label}>Please enter the required information</label>)
         }
     
         const itemElementsArray = [];
-        for (let key in this.state.item) {
+        for (let key in item) {
             itemElementsArray.push({
                 id: key,
-                config:this.state.item[key]
+                config:item[key]
             });
         }
         console.log("itemElementsArray" ,itemElementsArray )
@@ -213,7 +170,7 @@ class Item extends Component {
         let itemForm = null;
         itemForm = (
             
-            <Form noValidate validated={this.state.validated}>
+            <Form  id="FORMID" noValidate validated={this.state.validated}  onSubmit={this.addItemHandler}>
                     <Form.Label className={styles.font_title}>Item's Information :</Form.Label>
                     <div className={[styles.div ,styles.font_desc].join(' ')}>
                         {/* <Form.Group as={Row} controlId="exampleForm.ControlInput1"> */}
@@ -223,7 +180,7 @@ class Item extends Component {
                                 <Form.Control 
                                 required  
                                 type="text" 
-                                value={this.state.item.title.value} 
+                                value={item.title.value} 
                                 placeholder="Title" 
                                 onChange={(event) => this.inputChangeHandler(event,"title")}
                                 />
@@ -237,7 +194,7 @@ class Item extends Component {
                             <Col sm="9">
                                 <Form.Control  
                                 as="textarea" 
-                                value={this.state.item.description.value} 
+                                value={item.description.value} 
                                 rows="3" 
                                 onChange={(event) => this.inputChangeHandler(event,"description")}/>
                             </Col>
@@ -249,7 +206,7 @@ class Item extends Component {
                                  <Form.Control   
                                  required
                                  type="text" 
-                                 value={this.state.item.country.value} 
+                                 value={item.country.value} 
                                  placeholder="Country" 
                                  onChange={(event) => this.inputChangeHandler(event,"country")}
                                  />
@@ -265,7 +222,7 @@ class Item extends Component {
                                  <Form.Control  
                                  required 
                                  type="text" 
-                                 value={this.state.item.city.value} 
+                                 value={item.city.value} 
                                  placeholder="City" 
                                  onChange={(event) => this.inputChangeHandler(event,"city")}
                                  />
@@ -294,7 +251,7 @@ class Item extends Component {
                                 <Form.Control  
                                 required 
                                 type="text" 
-                                value={this.state.item.lookingfor_title.value} 
+                                value={item.lookingfor_title.value} 
                                 placeholder="Title" 
                                 onChange={(event) => this.inputChangeHandler(event,"lookingfor_title")} 
                                  />
@@ -308,7 +265,7 @@ class Item extends Component {
                             <Col sm="9">
                                 <Form.Control  
                                 as="textarea" 
-                                value={this.state.item.lookingfor_description.value} 
+                                value={item.lookingfor_description.value} 
                                 rows="3" 
                                 onChange={(event) => this.inputChangeHandler(event,"lookingfor_description")} />
                             </Col>
@@ -354,7 +311,9 @@ class Item extends Component {
                         <Button  title="CANCLE" clicked={this.cancelItemHandler}/>
                     </Col>
                     <Col xs={3} sm={3} md={3} lg={3}>
-                        <Button  title="ADD" type="submit" clicked={this.addItemHandler} />
+                        <Button  title="ADD" type="submit"  form="FORMID"  />
+                        {/* <Button  title="ADD" type="submit"  form="FORMID" clicked="document.forms[0].submit()"  /> */}
+
                      </Col>
                      <Col xs={3} sm={3} md={3} lg={3}>
                         <Button  title="MODIFY" clicked={this.modifyItemHandler}/>
@@ -370,13 +329,13 @@ class Item extends Component {
    }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({auth, item}) => {
     return {
-        error: state.auth.error,
-        isAuthenticated: state.auth.isAuthenticated,
-        userId: state.auth.userId,
-        token: state.auth.token,
-        isLoading : state.item.isLoading
+        error: auth.error,
+        isAuthenticated: auth.isAuthenticated,
+        userId: auth.userId,
+        token: auth.token,
+        isLoading : item.isLoading
         
     };
 };

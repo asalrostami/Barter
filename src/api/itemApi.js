@@ -7,7 +7,7 @@ export const addItem = (item, userId,token) => {
     // debugger 
    
     const imgNames = {};
-    // debugger
+   
     for(let i = 0; i < item.images.length; i++){
         if(item.images[i])
         {
@@ -31,21 +31,40 @@ export const addItem = (item, userId,token) => {
         images: imgNames
         // {"0":"d.jpg",null,"2":"k.jpg"}
 
-    }
+    } 
+    
     console.log("data in api",data);
-    return axios.post ('/items.json',data)
-    .then(response => {
+    const url = '/items.json';
+    return axios({
+        url,
+        method: 'POST',
+         data: data,
+    })
+     .then(response => {
         console.log("itemId",response.data.name);  
         return response;    
-   
+    
     })
     .catch(error => {
         console.log(error.response.data.error);   
         throw new Error("error additem",error.response.data.error.message);
     })
 
-    
 
+    // return axios.post ('/items.json',data)
+   
+    // // return axios.post ('/items.json?auth=' + token ,data)
+    // .then(response => {
+    //     console.log("itemId",response.data.name);  
+    //     return response;    
+    
+    // })
+    // .catch(error => {
+    //     console.log(error.response.data.error);   
+    //     throw new Error("error additem",error.response.data.error.message);
+    // })
+
+    
 }
 export const addItemsToUser = async (itemId, userId,token) => {
     let key = "";

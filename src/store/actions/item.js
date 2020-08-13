@@ -101,39 +101,40 @@ export const setItems =  (item, userId, token) => {
     const images = {};
     return async dispatch => {
         try{
-             const response = await uploadImage(item.images);
-                console.log("responce upload images",response);
-                console.log("***name upload images",item.images);
-            for(let i = 0; i < response.length; i++ )
-            {   if(response[i] === null) {
-                    images[i] = null;
-                } else {
-                    response[i].task.on('state_changed',
-                    (snapshot) => {
-                        // progress function
-                        console.log("snapshot",snapshot);    
-                    },
-                    (error) => {
-                        // error function
-                        console.log(error);    
-                    },
-                        async() => {
-                            // debugger
-                        // complete function
-                        const url = await firebase.storage().ref('images').child(item.images[i].name).getDownloadURL();
-                        // console.log("url",url);
-                        images[item.images[i].name] = url
+            //  const response = await uploadImage(item.images);
+            //     console.log("responce upload images",response);
+            //     console.log("***name upload images",item.images);
+            // for(let i = 0; i < response.length; i++ )
+            // {   if(response[i] === null) {
+            //         images[i] = null;
+            //     } else {
+            //         response[i].task.on('state_changed',
+            //         (snapshot) => {
+            //             // progress function
+            //             console.log("snapshot",snapshot);    
+            //         },
+            //         (error) => {
+            //             // error function
+            //             console.log(error);    
+            //         },
+            //             async() => {
+            //                 // debugger
+            //             // complete function
+            //             const url = await firebase.storage().ref('images').child(item.images[i].name).getDownloadURL();
+            //             // console.log("url",url);
+            //             images[item.images[i].name] = url
                 
-                    })  
-                }
-            }
+            //         })  
+            //     }
+            // }
             
-                    
-                console.log("imgResponse",images);
-                console.log("imgResponse length",Object.keys(images).length);
-                dispatch(itemSetStart());
+                    // debugger
+                // console.log("imgResponse",images);
+                // console.log("imgResponse length",Object.keys(images).length);
+                // dispatch(itemSetStart());
                 try {
                     // const itemResult = await addItem(item, userId,images,token);
+                   
                     const itemResult = await addItem(item, userId,token);
                     console.log("response additem",itemResult); 
 

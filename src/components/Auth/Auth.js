@@ -10,11 +10,13 @@ import { Link } from "react-router-dom";
 
 class  Auth extends Component {
 
-     loginHandler = () => {
-        console.log("error in auth",this.props.error);
-        if(!this.props.error){
-            // this.props.history.push('/');
-
+    componentDidUpdate(prevProps,prevState) {
+        if(this.props.error !== prevProps.error){
+            if(this.props.error){
+             console.log("this.props.error.message",this.props.error.message) 
+            }
+        }else if(!this.props.error){
+            this.props.history.push('/');
         }
     }
     render() {
@@ -63,7 +65,7 @@ class  Auth extends Component {
                     /* and other goodies */
                 }) => (
         
-                    <Form onSubmit={handleSubmit} className={styles.form}>
+                    <Form  onSubmit={handleSubmit} className={styles.form}>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email"
@@ -96,7 +98,7 @@ class  Auth extends Component {
                            <Link to="/auth/reset">Forget Password?</Link>
                         </div>
                         <div className={styles.div2}>
-                             <Button title="LOGIN" type="submit" clicked={this.loginHandler}/>
+                             <Button title="LOGIN" type="submit" clicked={handleSubmit}/>
                         </div>
                         <div className={styles.div2} style={{marginTop: "50px"}}>
                              <p>Don't have an account?<Link to={"/auth/signup"}>SignUp</Link></p>

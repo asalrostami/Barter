@@ -47,7 +47,7 @@ class App extends Component{
       </Switch>
       );
     }
-    console.log(`isAuthApp ${this.props.isAuthenticated}`);
+    // console.log(`isAuthApp ${this.props.isAuthenticated}`);
     return (
       <div>
         <Layout isAuth={this.props.isAuthenticated}>

@@ -82,7 +82,7 @@ const uploadImageFail = (state, action) => {
 //         return state;
 //     }
 // }
-const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ITEM_SET_SUCCESS: return itemSetSuccess(state, action);
         case actionTypes.ITEM_SET_FAIL: return itemSetFail(state, action);
@@ -97,5 +97,3 @@ const reducer = (state = initialState, action) => {
             return state;
     }
 }
-
-export default reducer;

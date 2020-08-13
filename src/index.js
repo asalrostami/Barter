@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
@@ -10,16 +10,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import authReducer from './store/reducers/auth';
-import itemReducer from './store/reducers/item';
+import reducers from './store/reducers';
 
 
-const rootReducer = combineReducers({
-   auth: authReducer,
-   item: itemReducer
-})
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(reducers, applyMiddleware(thunk));
       
  
 
