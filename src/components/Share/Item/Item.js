@@ -81,6 +81,7 @@ class Item extends Component {
             this.props.onSetIsLoadingTrue(true);
             this.props.onSetItems(this.state.item,this.props.userId,this.props.token);    
         } 
+        this.setState({validated : true});
     };
 
     getItemHandler = (itemId) => {
