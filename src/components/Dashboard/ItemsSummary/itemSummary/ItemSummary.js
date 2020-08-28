@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
+import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import styles from './ItemSummary.module.css';
 import img from '../../../../assets/Images/noPhoto.png';
 import Button from '../../../Share/Button/Button';
-// import {getImage} from '../../../../api/itemApi';
-import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 
 class ItemSummary extends Component {
@@ -22,12 +23,10 @@ class ItemSummary extends Component {
             })   
         }  
     }
-    componentWillReceiveProps(nextProps) {
-        // console.log("downloadedImgURL in shouldComponentUpdate" ,this.props.downloadedImgURL);
-        // console.log("nextisloading in shouldComponentUpdate" ,nextProps.downloadedImgURL);
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if(this.props.downloadedImgURL !== nextProps.downloadedImgURL) {
             for(let obj of nextProps.downloadedImgURL){
-                // console.log("obj in itemSummary",Object.keys(obj)[0])
+                // console.log("obj item.image in itemSummary",this.props.image);
                 if(this.props.image === Object.keys(obj)[0]){
                     this.setState({finalImgUrl:Object.values(obj)[0]});
                 }
@@ -36,6 +35,13 @@ class ItemSummary extends Component {
         }else {
             this.setState({finalImgUrl:img})
         }
+    }
+    modifyBtnHandler = () => {
+        console.log("888this.props.itemId in itemSummary",this.props.itemId)
+        this.props.history.push({
+            pathname: '/dashboard/item',
+            state: {itemId: this.props.itemId}
+        });
     }
    
     render() {
@@ -68,7 +74,7 @@ class ItemSummary extends Component {
                             </Row>
                             <Row className={styles.btn}>
                                 <Col className={styles.col_center}>
-                                    <Button title="Modify"></Button>
+                                    <Button title="Modify" clicked={this.modifyBtnHandler}></Button>
                                 </Col>
                             
                             </Row>
@@ -97,4 +103,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ItemSummary);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ItemSummary));

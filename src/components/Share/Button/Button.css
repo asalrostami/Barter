@@ -22,12 +22,12 @@
 @media (max-width: 768px) {
     .btn-md {
         width: 100px;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 @media (max-width: 576px) {
     .btn-md {
-        width: 70px;
+        width: 60px;
         font-size: 0.8rem;
     }
 

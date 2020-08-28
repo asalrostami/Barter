@@ -6,7 +6,7 @@ import {Row,Container, Col,Form} from 'react-bootstrap';
 import Button from '../Button/Button';
 import Images from '../../Share/Item/Images/Images';
 import * as actions from '../../../store/actions/index';
-import {getItem,removeItemFromItems,removeImags,removeItemFromUsers} from '../../../api/itemApi';
+import {getItem} from '../../../api/itemApi';
 import defaultItem from './utils/defaultItem';
 import styles from './Item.module.css';
 
@@ -16,17 +16,20 @@ class Item extends Component {
         validated: false,
         addingItem: true,  
         formIsValid:true,
+        updatedImgsFile: null
         
       }
       componentDidMount(){
-          this.props.onEmptyErrorMsg();
-          if(this.props.itemId){
-            // this.getItemHandler(this.props.itemId);
-          } else {
-              const item = {...defaultItem};
-              const today = this.getCurrentDate();
-              item.submitedDate.value = today
-              this.setState({item});      
+        this.props.onEmptyErrorMsg();
+        if(this.props.location?.state?.itemId){
+            console.log("^^^^this.props.itemId in item",this.props.location.state.itemId)
+            this.getItemHandler(this.props.location.state.itemId);
+        } else {
+            console.log("&&&&& without item id");
+            const item = {...defaultItem};
+            const today = this.getCurrentDate();
+            item.submitedDate.value = today
+            this.setState({item});      
           }
           
       }
@@ -47,7 +50,10 @@ class Item extends Component {
      getCurrentDate = () => {
        const today = moment().format('L');
        return today;
-    }
+     }
+     getSubmitedDate = () => {
+
+     }
     inputChangeHandler = (event , inputIdentifier) => {
         const value = event.target.value;
         const item = {... this.state.item};
@@ -79,7 +85,7 @@ class Item extends Component {
             console.log("itemsId", this.props.itemsId);
             
             this.props.onSetIsLoadingTrue(true);
-            this.props.onSetItems(this.state.item,this.props.userId,this.props.token);    
+            this.props.onSetItems(this.state.item,this.state.updatedImgsFile,this.props.userId,this.props.token);    
         } 
         this.setState({validated : true});
     };
@@ -87,8 +93,8 @@ class Item extends Component {
     getItemHandler = (itemId) => {
         getItem(itemId)
         .then(response => {
-            console.log("respone getItem",response);
-            this.setState({ item: response });
+            console.log("respone getItem",response.data);
+            this.setState({ item: response.data });
         })
         .catch(error => {
             console.log(error);   
@@ -100,32 +106,40 @@ class Item extends Component {
     
 
     modifyItemHandler = () => {
-        // checkValidity 
+        const Updatedimages = this.state.updatedImgsFile;
 
+        this.props.onSetIsLoadingTrue(true);
+        this.props.onUpdateItem(this.props.location.state.itemId,this.state.item,Updatedimages,this.props.userId,this.props.token);
+        console.log("isupdated",this.props.isUpdated);
 
     }
     deleteItemHandler = () => {
-        removeItemFromItems(this.state.item.itemId)
+        this.props.onSetIsLoadingTrue(true);
+        this.props.onRemoveItemFromItems(this.props.location.state.itemId)
         .then(res => {
             console.log("remove item from item successfully",res)
         }).catch(err => {
             throw new Error(err.message)
         })
 
-        removeItemFromUsers(this.state.item.itemId,this.state.item.userId)
+        this.props.onRemoveItemFromUsers(this.props.location.state.itemId,this.props.userId)
         .then(res => {
             console.log("remove item from user successfully",res)
         }).catch(err => {
             throw new Error(err.message)
         })
-
-        removeImags(this.state.item.images)
-        .then(res => {
+        if(this.state.item.images){
+            this.props.onRemoveImags(this.state.item.images)
+            .then(res => {
             console.log("remove images from storage successfully",res)
-        }).catch(err => {
+            }).catch(err => {
             throw new Error(err.message)
-        })
+            })
+        }
+        
     }
+
+
     cancelItemHandler = () => {
         this.props.history.goBack();
     }
@@ -142,13 +156,15 @@ class Item extends Component {
        
     }
     // callback function
-    getImagesHandler = (images) => {
+    getImagesHandler = (images,updatedImagesFile) => {
+
         const item = {... this.state.item}
         item["images"] = images
-        this.setState({item},() => {
-            console.log("images" , this.state.item.images);
+        this.setState({item,updatedImgsFile:updatedImagesFile},() => {
+            console.log("(((((((((images" , this.state.item.images);
         });
     }
+    
     render() {
         const { item, formIsValid } = this.state;
         
@@ -166,7 +182,7 @@ class Item extends Component {
                 config:item[key]
             });
         }
-        console.log("itemElementsArray" ,itemElementsArray )
+        
 
         let itemForm = null;
         itemForm = (
@@ -239,7 +255,7 @@ class Item extends Component {
                                  name="submitedDate"
                                  plaintext 
                                  readOnly 
-                                 defaultValue={this.getCurrentDate()} />
+                                 defaultValue={item.submitedDate.value} />
                             </Col>
                          </Form.Group>
                     </div>
@@ -274,7 +290,7 @@ class Item extends Component {
                     </div>
             </Form>
         );
-        
+       
         return(
             <Container className={styles.con} fluid="md">
                 <Row>
@@ -284,13 +300,17 @@ class Item extends Component {
                 </Row>
                 <Row >
                     <Col className={styles.col}>
-                        <Images onGetImages={this.getImagesHandler}/>
+                        <Images onGetImagesProps={this.getImagesHandler} 
+                        itemimages={item.images 
+                        ? item.images
+                        :[null,null,null]} />
                         <Row>
                         
                             <Col className={styles.space}  >
                                 <div className='custom-control custom-switch'>
                                     <input
                                     type='checkbox'
+                                    checked={item.forBarterSwitch.value}
                                     className='custom-control-input'
                                     id='customSwitches'
                                     onChange={this.handleSwitchChange}
@@ -312,15 +332,26 @@ class Item extends Component {
                         <Button  title="CANCLE" clicked={this.cancelItemHandler}/>
                     </Col>
                     <Col xs={3} sm={3} md={3} lg={3}>
-                        <Button  title="ADD" type="submit"  form="FORMID"  />
-                        {/* <Button  title="ADD" type="submit"  form="FORMID" clicked="document.forms[0].submit()"  /> */}
+                        {/* <Button  title="ADD" type="submit"  form="FORMID"  /> */}
+                        {this.props.location?.state?.itemId
+                        ? <Button  title="ADD ITEM" type="submit"  form="FORMID"  disabled={true}/>
+                        :<Button  title="ADD ITEM" type="submit"  form="FORMID"  />
+                        }
 
                      </Col>
                      <Col xs={3} sm={3} md={3} lg={3}>
-                        <Button  title="MODIFY" clicked={this.modifyItemHandler}/>
+                        {this.props.location?.state?.itemId
+                            ? <Button  title="MODIFY" type="button"  clicked={this.modifyItemHandler}/>
+                            : <Button  title="MODIFY" type="button" clicked={this.modifyItemHandler} disabled={true}/>
+                        }   
                     </Col>
                     <Col xs={3} sm={3} md={3} lg={3}>
-                      <Button  title="DELETE" clicked={this.deleteItemHandler}/>
+                        {this.props.location?.state?.itemId
+                            ? <Button  title="DELETE" type="button" clicked={this.deleteItemHandler}/>
+                            : <Button  title="DELETE" type="button" clicked={this.deleteItemHandler} disabled={true}/>
+                        }
+
+                      
                     </Col>
                 </Row>
             
@@ -336,7 +367,8 @@ const mapStateToProps = ({auth, item}) => {
         isAuthenticated: auth.isAuthenticated,
         userId: auth.userId,
         token: auth.token,
-        isLoading : item.isLoading
+        isLoading : item.isLoading,
+        isUpdated : item.isUpdated
         
     };
 };
@@ -344,8 +376,12 @@ const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
         onEmptyErrorMsg: () => dispatch(actions.emptyErrorMsg()),
-        onSetItems:(item, userId,token) => dispatch(actions.setItems(item, userId, token)),
-        onSetIsLoadingTrue:(isLoading) => dispatch(actions.setIsLoadingTrue(isLoading))
+        onSetItems:(item, updatedImgsFile,userId,token) => dispatch(actions.setItems(item, updatedImgsFile,userId, token)),
+        onSetIsLoadingTrue:(isLoading) => dispatch(actions.setIsLoadingTrue(isLoading)),
+        onUpdateItem:(itemId, item,Updatedimages,userId,token) => dispatch(actions.updateItem(itemId, item,Updatedimages,userId,token)),
+        onRemoveItemFromItems:(itemId) => dispatch(actions.removeItemFromItems(itemId)),
+        onRemoveItemFromUsers:(itemId,userId) => dispatch(actions.removeItemFromUsers(itemId,userId)),
+        onRemoveImags:(images) => dispatch(actions.removeImags(images))
     };
 };
 

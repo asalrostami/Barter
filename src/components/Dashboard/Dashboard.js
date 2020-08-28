@@ -14,17 +14,20 @@ class  Dashboard extends Component {
         const items = [];
         getItemsByUserId(this.props.userId)
         .then(response => {
-            let isObject = false;
-            // console.log("response get user dashboard", response);
+            // let isObject = false;
+            console.log("response get user dashboard", response);
             for(let item in response.data){
+                let isObject = false;
                 let imgArray = [];
                 // images is an object
-                if(!Array.isArray(response.data[item].images)){
+                if(!Array.isArray(response.data[item].images) && response.data[item].images){
                     // console.log("______________");
                     isObject = true;
                     imgArray[Object.keys(response.data[item].images)] = Object.values(response.data[item].images)[0];    
                 }
-                // console.log("imgArray", imgArray);
+                console.log("&&&&&imgArray", imgArray);
+                console.log("response.data[item].images)", response.data[item].images);
+                // debugger
                 if(isObject){
                     items.push({
                         ...response.data[item],

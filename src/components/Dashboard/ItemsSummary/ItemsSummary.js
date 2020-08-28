@@ -22,15 +22,18 @@ const itemsSummary = (props) => {
         <Container fluid className={styles.Content}>
             {
                 itemsList.map(item => {
-                    const img = getValidImage(item.images);
-                    // console.log("img in ItemsSummary",img)
+                    let img = null
+                    if(item.images){
+                        img = getValidImage(item.images);
+                        console.log("img in ItemsSummary",img)
+                    }
                     
                     return (
                         <Row className={styles.row}
                         key={item.itemId}>
                             <Col xs={12} md={12} lg={12}>
                                 <Item 
-                                  // image={item.images[0]}
+                                itemId={item.itemId}
                                 image={img}
                                 title={item.title.value}
                                 submitedDate={item.submitedDate.value}

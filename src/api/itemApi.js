@@ -3,20 +3,17 @@ import * as firebase from '../Firebase/firebase';
 
 
 export const addItem = (item, userId,token) => {
-    // export const addItem = (item,images, userId,token) => {
-    // debugger 
+    // const imgNames = {};
    
-    const imgNames = {};
-   
-    for(let i = 0; i < item.images.length; i++){
-        if(item.images[i])
-        {
-            imgNames[i] = item.images[i].name;
-        }else {
-            imgNames[i] = null;
-        }
+    // for(let i = 0; i < item.images.length; i++){
+    //     if(item.images[i])
+    //     {
+    //         imgNames[i] = item.images[i].name;
+    //     }else {
+    //         imgNames[i] = null;
+    //     }
        
-    }
+    // }
 
     const data = {
         userId: userId,
@@ -28,7 +25,8 @@ export const addItem = (item, userId,token) => {
         lookingfor_title: item.lookingfor_title,
         lookingfor_description: item.lookingfor_description,
         forBarterSwitch: item.forBarterSwitch,
-        images: imgNames
+        images: item.images
+        // images: imgNames
         // {"0":"d.jpg",null,"2":"k.jpg"}
 
     } 
@@ -95,13 +93,33 @@ export const addItemsToUser = async (itemId, userId,token) => {
     
     
 }
+export const convertURLToBlob = (url) => {
+    return axios({
+        method: 'get',
+        url: url, // blob url eg. blob:http://127.0.0.1:8000/e89c5d87-a634-4540-974c-30dc476825cc
+        responseType: 'blob'
+    }).then(response => {
+        //  let reader = new FileReader();
+        //  reader.readAsDataURL(response.data); 
+        //  reader.onloadend = () => {
+        //     console.log("reader.result in convertURLToBlob" ,reader.result)
+        //     return reader.result;
+    // }
+          console.log("response in convertURLToBlob" ,response)
+          return response;
+    
+    }).catch(error => {
+        console.log(error);   
+        throw new Error("error convertURLToBlob",error.message);
+    })
 
+}
 export const getAllItems = () => {
     return axios.get('/items.json' ); 
 }
 
-export const getItemByDropdownValue = (filterValue) =>{
-    
+export const downloadFileImage = (url) =>{
+    return firebase.storage().refFromURL(url);
 }
 
 export const uploadImage = (images) => {
@@ -131,6 +149,20 @@ export const getItem = (itemId) => {
     return axios.get('/items/' + itemId + '.json' )
     
 }
+export const getUserNumberByUserId = async (userId) => {
+    const quaryParams = '?orderBy="userId"&equalTo="' + userId + '"';
+    return await axios.get('/users.json' + quaryParams )
+    // .then(response => {
+    //     console.log("getUserNumberByUserId user number",Object.keys(response.data)[0]);
+    //     return Object.keys(response.data)[0];
+        
+    // })
+    // .catch(error => {
+    //     console.log("getUserNumberByUserId error",error);
+    //     throw new Error(error.message);
+    // })
+    
+}
 export const getItemsByUserId = async (userId) => {
     const quaryParams = '?orderBy="userId"&equalTo="' + userId + '"';
     return await axios.get('/items.json' + quaryParams )
@@ -144,34 +176,29 @@ export const getItemsByUserId = async (userId) => {
     })
     
 }
-export const removeItemFromItems = (itemId) => {
+export const updateItemApi = (itemId,data) => {
+    console.log("itemId updateItemApi",itemId)
+    return axios.put('/items/' + itemId + '.json', data );  
+}
+export const removeItemFromItemsAPI = (itemId) => {
     return axios.delete('items/' + itemId + '.json' );
 }
-export const removeItemFromUsers = (itemId, userId) => {
-    return axios.delete('users/'  + userId + '/' +  'itemsId/' + itemId + '.json' );
-}
-
-export const removeImags = (images) => {
-    let promises = [];
-    for(let img of images) {
-        if(img) {
-            promises.push(firebase.storage().ref('images').child(img.name).delete())   
-        } else {
-            promises.push( new Promise((res, rej) => res(null)));
-        }
-    }
-    console.log("promises of delete",promises);
-    return Promise.all(promises)
+export const removeItemFromUsersAPI =  (itemId, userId) => {
+ return getUserNumberByUserId(userId)
     .then(response => {
-        return response
-      
-    }).catch(err =>  {
-        console.log(err);
-        throw new Error(err.message)
-    });
-
+        console.log("getUserNumberByUserId user number",Object.keys(response.data)[0]);
+        const id = Object.keys(response.data)[0];
+        return  axios.delete('users/'  + id + '/' +  'itemsId/' + itemId + '.json' );   
+    })
+    .catch(error => {
+        console.log("getUserNumberByUserId error",error);
+        throw new Error(error.message);
+    })
+    
     
 }
+
+
 
 // with bearer in header
 

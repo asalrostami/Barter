@@ -8,8 +8,11 @@ const initialState = {
     error : null,
     itemsAdded : false,
     isLoading : false,
-    // downloadedImgURL : null
-    downloadedImgURL : []
+    downloadedImgURL : [],
+    isUpdated : false,
+    isRemovedItemItems: false,
+    isRemovedItemUsers :false,
+    isImagesRemoved:false
 }
 
 const setIsLoading = (state, action) => {
@@ -25,6 +28,41 @@ const itemSetSuccess = (state, action) => {
     });
 }
 const itemSetFail = (state, action) => {
+    return updateObject(state, {
+        error : action.error
+    });
+}
+const updateItemSuccess = (state, action) => {
+    return updateObject(state, {
+        isUpdated : action.isUpdated,
+        isLoading : action.isLoading
+    });
+}
+const updateItemFail = (state, action) => {
+    return updateObject(state, {
+        error : action.error
+    });
+}
+
+const removeItemItemsSuccess = (state, action) => {
+    return updateObject(state, {
+        isRemovedItemItems : action.isRemovedItemItems,
+        // isLoading : action.isLoading
+    });
+}
+const removeItemItemsFail = (state, action) => {
+    return updateObject(state, {
+        error : action.error
+    });
+}
+
+const removeItemUsersSuccess = (state, action) => {
+    return updateObject(state, {
+        isRemovedItemUsers : action.isRemovedItemUsers,
+        isLoading : action.isLoading
+    });
+}
+const removeItemUsersFail = (state, action) => {
     return updateObject(state, {
         error : action.error
     });
@@ -69,6 +107,16 @@ const uploadImageFail = (state, action) => {
         error : action.error
     });
 }
+const removeImageSuccess = (state, action) => {
+    return updateObject(state, {
+        isImagesRemoved: action.isImagesRemoved
+    });
+}
+const removeImageFail = (state, action) => {
+    return updateObject(state, {
+        error : action.error
+    });
+}
 
 
 // export default function (state = {}, action) {
@@ -93,6 +141,14 @@ export default (state = initialState, action) => {
         case actionTypes.ISLOADING_TRUE: return setIsLoading(state, action);
         case actionTypes.GETIMAGE_SUCCECC: return getImgSuccess(state, action);
         case actionTypes.GETIMAGE_FAIL: return getImgFail(state, action);
+        case actionTypes.UPDATE_ITEM_SUCCESS: return updateItemSuccess(state, action);
+        case actionTypes.UPDATE_ITEM_ERROR: return updateItemFail(state, action);
+        case actionTypes.REMOVE_ITEM_ITEMS_SUCCESS: return removeItemItemsSuccess(state, action);
+        case actionTypes.REMOVE_ITEM_ITEMS_ERROR: return removeItemItemsFail(state, action);
+        case actionTypes.REMOVE_ITEM_USERS_SUCCESS: return removeItemUsersSuccess(state, action);
+        case actionTypes.REMOVE_ITEM_USERS_ERROR: return removeItemUsersFail(state, action);
+        case actionTypes.REMOVE_IMAGE_SUCCESS: return removeImageSuccess(state, action);
+        case actionTypes.REMOVE_IMAGE_ERROR: return removeImageFail(state, action);
         default:
             return state;
     }

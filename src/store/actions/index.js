@@ -9,5 +9,9 @@ export {
     setItems,
     addItems,
     setIsLoadingTrue,
-    getImage
+    getImage,
+    updateItem,
+    removeItemFromItems,
+    removeItemFromUsers,
+    removeImags
 } from './item'
