@@ -11,11 +11,16 @@ import { resetPassword } from '../../../api/authApi';
 
 
 class ResetPass extends Component {
+    constructor(props){
+        super(props);
+        this. state = { loading: false };
+    }
+    
     componentDidMount() {
         this.props.onEmptyErrorMsg();
     }
 
-  state = { loading: false };
+ 
   // handleReset = async () => {
   //   const { email, dispatch } = this.props;
   //   this.setState({ loading: true });

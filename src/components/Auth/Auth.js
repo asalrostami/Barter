@@ -9,6 +9,9 @@ import * as actions from '../../store/actions/auth';
 import { Link } from "react-router-dom";
 
 class  Auth extends Component {
+    constructor(props){
+        super(props);
+    }
 
     componentDidUpdate(prevProps,prevState) {
         if(this.props.error !== prevProps.error){

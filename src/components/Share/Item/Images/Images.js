@@ -4,22 +4,22 @@ import styles from './Images.module.css';
 import Model from '../../../UI/Model/Model';
 import * as actions from '../../../../store/actions/index';
 import { connect } from 'react-redux';
-import {convertURLToBlob,downloadFileImage} from '../../../../api/itemApi';
-import {downloadImage} from '../../../../store/actions/item';
-import img from '../../../../assets/Images/noPhoto.png';
-
 
 class Images extends Component {
-    state = {
-        selectedId:null,
-        selectedFile: null,
-        imagePreviewUrl: null,
-        imgURLList: [null,null,null],
-        imgNameList:[null,null,null],
-        showModel: false,
-        previousImages : [null,null,null]
-    }
-    convertedImages = (images) => {
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedId:null,
+      selectedFile: null,
+      imagePreviewUrl: null,
+      imgURLList: [null,null,null],
+      imgNameList:[null,null,null],
+      showModel: false,
+      previousImages : [null,null,null]
+    };
+  }
+    
+  convertedImages = (images) => {
       let imgArray = [];
       if(!Array.isArray(images)){
           imgArray[Object.keys(images)] = Object.values(images)[0]; 

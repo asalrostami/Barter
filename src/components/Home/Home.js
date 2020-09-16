@@ -5,12 +5,15 @@ import {getAllItems} from '../../api/itemApi';
 import * as moment from 'moment'
 
 class Home extends Component  {
-    state = {
-        itemsList: [],
-        filterdItemsList: [],
-        filterValue: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            itemsList: [],
+            filterdItemsList: [],
+            filterValue: ''
+        }; 
     }
-
+    
     searchDropDownHandler = (filterValue) =>{
         this.setState({filterValue : filterValue},() => {
             console.log("dropDownValue in home",this.state.filterValue);

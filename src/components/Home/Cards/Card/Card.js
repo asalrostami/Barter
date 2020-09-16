@@ -10,9 +10,13 @@ import * as actions from '../../../../store/actions/index';
 
 
 class CardItem extends Component {
-  state = {
-    finalImgUrl : this.props.downloadedImgURL
-}
+  constructor(props){
+    super(props);
+    this. state = {
+      finalImgUrl : this.props.downloadedImgURL
+   };
+  }
+ 
  componentDidMount() {
   const url =  "";
   // console.log("image in card",this.props.image);

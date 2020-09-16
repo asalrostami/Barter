@@ -9,9 +9,13 @@ import Button from '../../../Share/Button/Button';
 import * as actions from '../../../../store/actions/index';
 
 class ItemSummary extends Component {
-   state = {
-       finalImgUrl : this.props.downloadedImgURL
-   }
+    constructor(props){
+        super(props);
+        this. state = {
+            finalImgUrl : this.props.downloadedImgURL
+        };
+    }
+  
     componentDidMount() {
         const url =  "";
         // console.log("image in itemSummary",this.props.image);

@@ -7,9 +7,13 @@ import {connect} from 'react-redux';
 import {getItemsByUserId} from '../../api/itemApi';
 
 class  Dashboard extends Component {
-    state = {
-        itemsList: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            itemsList: []
+        };
     }
+    
     componentDidMount() {
         const items = [];
         getItemsByUserId(this.props.userId)

@@ -4,9 +4,13 @@ import styles from './Filter.module.css';
 
 
 class Filter extends Component  {
-    state = {
-        filterValue: ""
+    constructor(props){
+        super(props);
+        this.state = {
+            filterValue: ""
+        };
     }
+    
     handleInputChange = (event) => {
         this.setState({filterValue : event.target.value}, () => {
             console.log("filterValue in filter",this.state.filterValue);

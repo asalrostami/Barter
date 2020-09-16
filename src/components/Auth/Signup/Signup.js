@@ -9,6 +9,9 @@ import * as actions from '../../../store/actions/auth';
 
 
 class Signup extends Component {
+    constructor(props){
+        super(props);
+    }
     componentDidMount() {
         this.props.onEmptyErrorMsg();
     }

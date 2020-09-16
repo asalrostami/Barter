@@ -11,19 +11,24 @@ import defaultItem from './utils/defaultItem';
 import styles from './Item.module.css';
 
 class Item extends Component {
-     state = {
-         item : null,
-        validated: false,
-        addingItem: true,  
-        formIsValid:true,
-        updatedImgsFile: null
-        
-      }
+    constructor(props) {
+        super(props);
+        this.state = {
+            item : null,
+           validated: false,
+           addingItem: true,  
+           formIsValid:true,
+           updatedImgsFile: null
+           
+         };
+    }
+     
       componentDidMount(){
         this.props.onEmptyErrorMsg();
         if(this.props.location?.state?.itemId){
             console.log("^^^^this.props.itemId in item",this.props.location.state.itemId)
             this.getItemHandler(this.props.location.state.itemId);
+            Document.title = this.props.location.state.itemId;
         } else {
             console.log("&&&&& without item id");
             const item = {...defaultItem};
